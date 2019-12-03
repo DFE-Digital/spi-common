@@ -260,5 +260,8 @@ paket-files/
 __pycache__/
 *.pyc
 
+# Mac OS files
+.DS_Store
+
 # XML Docs
 Dfe.Spi.Common.Models.xml
