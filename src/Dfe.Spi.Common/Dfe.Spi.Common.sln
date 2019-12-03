@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.Models", "Df
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.UnitTesting", "Dfe.Spi.Common.UnitTesting\Dfe.Spi.Common.UnitTesting.csproj", "{64CA4C56-530B-487A-A090-DBE758D2D7E5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Release", "Release", "{7A4DDCAA-4208-4440-B644-C3B0DB7A680C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A7329C41-FA69-408C-81AF-71BF990C0357}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\pipelines\Dfe.Spi.Common.Logging.yml = ..\..\pipelines\Dfe.Spi.Common.Logging.yml
@@ -39,9 +37,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{A7329C41-FA69-408C-81AF-71BF990C0357} = {7A4DDCAA-4208-4440-B644-C3B0DB7A680C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {10CC36FA-B89F-4CEF-874E-3E16C654B7CA}
