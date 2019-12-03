@@ -5,25 +5,25 @@ trigger:
       - "*"
   paths:
     include:
-      - /pipelines/Dfe.Spi.Common.Models.yml
-      - /src/Dfe.Spi.Common/Dfe.Spi.Common.Models/*
+      - /pipelines/Dfe.Spi.Common.Logging.yml
+      - /src/Dfe.Spi.Common/Dfe.Spi.Common.Logging/*
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
   - task: DotNetCoreCLI@2
-    displayName: 'Build Common Models Library'
+    displayName: 'Build Common Logging Library'
     inputs:
       command: 'build'
-      projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Models/Dfe.Spi.Common.Models.csproj'
+      projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Logging/Dfe.Spi.Common.Logging.csproj'
       arguments: '--configuration Release --output $(Build.BinariesDirectory)'
       
   - task: CopyFiles@2
     displayName: 'Copy NuGet Package to Artifacts Staging'
     inputs:
       SourceFolder: '$(Build.BinariesDirectory)'
-      Contents: 'Dfe.Spi.Common.Models.*.nupkg'
+      Contents: 'Dfe.Spi.Common.Logging.*.nupkg'
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
       
   - task: PublishBuildArtifacts@1

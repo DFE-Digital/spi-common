@@ -265,3 +265,4 @@ __pycache__/
 
 # XML Docs
 Dfe.Spi.Common.Models.xml
+Dfe.Spi.Common.Logging.xml
