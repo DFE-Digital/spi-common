@@ -28,6 +28,7 @@
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\ca.ruleset</CodeAnalysisRuleSet>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 </Project>
