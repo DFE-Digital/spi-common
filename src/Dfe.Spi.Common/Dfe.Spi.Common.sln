@@ -3,17 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.Spi.Common.Models", "Dfe.Spi.Common.Models\Dfe.Spi.Common.Models.csproj", "{019ED414-696A-4B9B-A127-201540248845}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.Models", "Dfe.Spi.Common.Models\Dfe.Spi.Common.Models.csproj", "{019ED414-696A-4B9B-A127-201540248845}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.Spi.Common.UnitTesting", "Dfe.Spi.Common.UnitTesting\Dfe.Spi.Common.UnitTesting.csproj", "{64CA4C56-530B-487A-A090-DBE758D2D7E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.UnitTesting", "Dfe.Spi.Common.UnitTesting\Dfe.Spi.Common.UnitTesting.csproj", "{64CA4C56-530B-487A-A090-DBE758D2D7E5}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Release", "Release", "{7A4DDCAA-4208-4440-B644-C3B0DB7A680C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A7329C41-FA69-408C-81AF-71BF990C0357}"
-ProjectSection(SolutionItems) = preProject
-	..\..\pipelines\Dfe.Spi.Common.Models.yml = ..\..\pipelines\Dfe.Spi.Common.Models.yml
-	..\..\pipelines\Dfe.Spi.Common.UnitTesting.yml = ..\..\pipelines\Dfe.Spi.Common.UnitTesting.yml
-EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		..\..\pipelines\Dfe.Spi.Common.Logging.yml = ..\..\pipelines\Dfe.Spi.Common.Logging.yml
+		..\..\pipelines\Dfe.Spi.Common.Models.yml = ..\..\pipelines\Dfe.Spi.Common.Models.yml
+		..\..\pipelines\Dfe.Spi.Common.UnitTesting.yml = ..\..\pipelines\Dfe.Spi.Common.UnitTesting.yml
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.Logging", "Dfe.Spi.Common.Logging\Dfe.Spi.Common.Logging.csproj", "{404F1450-E9CF-4537-98B4-72C0C36C656B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,14 +32,18 @@ Global
 		{64CA4C56-530B-487A-A090-DBE758D2D7E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64CA4C56-530B-487A-A090-DBE758D2D7E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64CA4C56-530B-487A-A090-DBE758D2D7E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{404F1450-E9CF-4537-98B4-72C0C36C656B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{404F1450-E9CF-4537-98B4-72C0C36C656B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{404F1450-E9CF-4537-98B4-72C0C36C656B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{404F1450-E9CF-4537-98B4-72C0C36C656B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {10CC36FA-B89F-4CEF-874E-3E16C654B7CA}
-	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A7329C41-FA69-408C-81AF-71BF990C0357} = {7A4DDCAA-4208-4440-B644-C3B0DB7A680C}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {10CC36FA-B89F-4CEF-874E-3E16C654B7CA}
 	EndGlobalSection
 EndGlobal
