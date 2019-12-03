@@ -5,6 +5,7 @@ trigger:
       - "*"
   paths:
     include:
+      - /pipelines/Dfe.Spi.Common.UnitTesting
       - /src/Dfe.Spi.Common/Dfe.Spi.Common.UnitTesting/*
 
 pool:

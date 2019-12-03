@@ -5,6 +5,7 @@ trigger:
       - "*"
   paths:
     include:
+      - /pipelines/Dfe.Spi.Common.Models
       - /src/Dfe.Spi.Common/Dfe.Spi.Common.Models/*
 
 pool:
