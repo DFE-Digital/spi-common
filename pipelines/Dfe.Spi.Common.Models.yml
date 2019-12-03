@@ -1,0 +1,34 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - "*"
+  paths:
+    include:
+      - /pipelines/Dfe.Spi.Common.Models
+      - /src/Dfe.Spi.Common/Dfe.Spi.Common.Models/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: DotNetCoreCLI@2
+    displayName: 'Build Common Models Library'
+    inputs:
+      command: 'build'
+      projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Models/Dfe.Spi.Common.Models.csproj'
+      arguments: '--configuration Release --output $(Build.BinariesDirectory)'
+      
+  - task: CopyFiles@2
+    displayName: 'Copy NuGet Package to Artifacts Staging'
+    inputs:
+      SourceFolder: '$(Build.BinariesDirectory)'
+      Contents: 'Dfe.Spi.Common.Models.*.nupkg'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifacts'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'

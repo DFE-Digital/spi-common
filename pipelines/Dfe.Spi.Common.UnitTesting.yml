@@ -1,22 +1,31 @@
 trigger:
-- master
+  batch: true
+  branches:
+    include:
+      - "*"
+  paths:
+    include:
+      - /pipelines/Dfe.Spi.Common.UnitTesting
+      - /src/Dfe.Spi.Common/Dfe.Spi.Common.UnitTesting/*
 
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
   - task: DotNetCoreCLI@2
-    displayName: 'Build Common Models Library'
+    displayName: 'Build Common Unit Testing Library'
     inputs:
       command: 'build'
-      projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Models/Dfe.Spi.Common.Models.csproj'
+      projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.UnitTesting/Dfe.Spi.Common.UnitTesting.csproj'
       arguments: '--configuration Release --output $(Build.BinariesDirectory)'
+      
   - task: CopyFiles@2
     displayName: 'Copy NuGet Package to Artifacts Staging'
     inputs:
       SourceFolder: '$(Build.BinariesDirectory)'
-      Contents: 'Dfe.Spi.Common.Models.*.nupkg'
+      Contents: 'Dfe.Spi.Common.UnitTesting.*.nupkg'
       TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifacts'
     inputs:
