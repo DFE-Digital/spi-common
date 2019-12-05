@@ -2,7 +2,7 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using Dfe.Spi.Common.Models;
+    using Dfe.Spi.Common.Logging.Models;
 
     /// <summary>
     /// Describes the operations of the logger wrapper.
@@ -13,10 +13,10 @@
         /// Sets the context (i.e. custom dimension information) against the
         /// instance.
         /// </summary>
-        /// <param name="requestResponseBase">
-        /// An instance of <see cref="RequestResponseBase" />.
+        /// <param name="requestContext">
+        /// An instance of <see cref="RequestContext" />.
         /// </param>
-        void SetContext(RequestResponseBase requestResponseBase);
+        void SetContext(RequestContext requestContext);
 
         /// <summary>
         /// Logs a <paramref name="message" /> with debug-level importance.

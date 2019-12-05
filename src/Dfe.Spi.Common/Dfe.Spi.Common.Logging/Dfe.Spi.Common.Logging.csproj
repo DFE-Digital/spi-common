@@ -17,10 +17,6 @@
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="All" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\Dfe.Spi.Common.Models\Dfe.Spi.Common.Models.csproj" />
-  </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
