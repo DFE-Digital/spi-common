@@ -11,7 +11,8 @@
     public class LoggerWrapper : ILoggerWrapper
     {
         private readonly ILogger logger;
-        private readonly RequestResponseBase requestResponseBase;
+
+        private RequestResponseBase requestResponseBase;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="LoggerWrapper" />
@@ -20,14 +21,15 @@
         /// <param name="logger">
         /// An instance of type <see cref="ILogger" />.
         /// </param>
-        /// <param name="requestResponseBase">
-        /// An instance of <see cref="RequestResponseBase" />.
-        /// </param>
         public LoggerWrapper(
-            ILogger logger,
-            RequestResponseBase requestResponseBase)
+            ILogger logger)
         {
             this.logger = logger;
+        }
+
+        /// <inheritdoc />
+        public void SetContext(RequestResponseBase requestResponseBase)
+        {
             this.requestResponseBase = requestResponseBase;
         }
 

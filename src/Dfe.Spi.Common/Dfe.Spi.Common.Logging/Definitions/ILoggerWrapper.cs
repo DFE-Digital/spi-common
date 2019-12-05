@@ -2,12 +2,22 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using Dfe.Spi.Common.Models;
 
     /// <summary>
     /// Describes the operations of the logger wrapper.
     /// </summary>
     public interface ILoggerWrapper
     {
+        /// <summary>
+        /// Sets the context (i.e. custom dimension information) against the
+        /// instance.
+        /// </summary>
+        /// <param name="requestResponseBase">
+        /// An instance of <see cref="RequestResponseBase" />.
+        /// </param>
+        void SetContext(RequestResponseBase requestResponseBase);
+
         /// <summary>
         /// Logs a <paramref name="message" /> with debug-level importance.
         /// </summary>
