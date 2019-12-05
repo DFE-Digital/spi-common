@@ -19,7 +19,7 @@
         private RequestContext requestContext;
 
         /// <summary>
-        /// Initialises a new instance of the <see cref="LoggerWrapper" />
+        /// Initializes a new instance of the <see cref="LoggerWrapper"/> class.
         /// class.
         /// </summary>
         /// <param name="logger">

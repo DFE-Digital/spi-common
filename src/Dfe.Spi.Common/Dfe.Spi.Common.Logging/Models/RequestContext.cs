@@ -9,7 +9,7 @@
     public class RequestContext
     {
         /// <summary>
-        /// Initialises a new instance of the <see cref="RequestContext" />
+        /// Initializes a new instance of the <see cref="RequestContext"/> class.
         /// class.
         /// </summary>
         internal RequestContext()
