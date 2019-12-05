@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A7329C41
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.Logging", "Dfe.Spi.Common.Logging\Dfe.Spi.Common.Logging.csproj", "{404F1450-E9CF-4537-98B4-72C0C36C656B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{AC3FB157-5E18-4981-A6A0-80C5CEC8DE96}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A7329C41-FA69-408C-81AF-71BF990C0357} = {AC3FB157-5E18-4981-A6A0-80C5CEC8DE96}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {10CC36FA-B89F-4CEF-874E-3E16C654B7CA}
