@@ -1,4 +1,6 @@
-﻿namespace Dfe.Spi.Common.Logging
+﻿using System.Linq;
+
+namespace Dfe.Spi.Common.Logging
 {
     using System;
     using Dfe.Spi.Common.Logging.Definitions;
@@ -38,17 +40,18 @@
                 throw new ArgumentNullException(nameof(headerDictionary));
             }
 
-            string internalRequestIdStr =
-                headerDictionary[InternalRequestIdHeaderName];
-            Guid internalRequestId = Guid.Parse(internalRequestIdStr);
+            var internalRequestId = headerDictionary.ContainsKey(InternalRequestIdHeaderName)
+                ? Guid.Parse(headerDictionary[InternalRequestIdHeaderName].First())
+                : Guid.NewGuid();
 
-            string externalRequestIdStr =
-                headerDictionary[ExternalRequestIdHeaderName];
+            var externalRequestId = headerDictionary.ContainsKey(ExternalRequestIdHeaderName)
+                ? headerDictionary[ExternalRequestIdHeaderName].First()
+                : "NOT-SUPPLIED";
 
             RequestContext requestContext = new RequestContext()
             {
                 InternalRequestId = internalRequestId,
-                ExternalRequestId = externalRequestIdStr,
+                ExternalRequestId = externalRequestId,
             };
 
             this.requestContext = requestContext;
