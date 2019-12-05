@@ -2,7 +2,7 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using Dfe.Spi.Common.Logging.Models;
+    using Microsoft.AspNetCore.Http;
 
     /// <summary>
     /// Describes the operations of the logger wrapper.
@@ -13,10 +13,10 @@
         /// Sets the context (i.e. custom dimension information) against the
         /// instance.
         /// </summary>
-        /// <param name="requestContext">
-        /// An instance of <see cref="RequestContext" />.
+        /// <param name="headerDictionary">
+        /// An instance of type <see cref="IHeaderDictionary" />.
         /// </param>
-        void SetContext(RequestContext requestContext);
+        void SetContext(IHeaderDictionary headerDictionary);
 
         /// <summary>
         /// Logs a <paramref name="message" /> with debug-level importance.

@@ -3,6 +3,7 @@
     using System;
     using Dfe.Spi.Common.Logging.Definitions;
     using Dfe.Spi.Common.Logging.Models;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
@@ -10,6 +11,9 @@
     /// </summary>
     public class LoggerWrapper : ILoggerWrapper
     {
+        private const string InternalRequestIdHeaderName = "X-Internal-Request-Id";
+        private const string ExternalRequestIdHeaderName = "X-External-Request-Id";
+
         private readonly ILogger logger;
 
         private RequestContext requestContext;
@@ -27,8 +31,26 @@
         }
 
         /// <inheritdoc />
-        public void SetContext(RequestContext requestContext)
+        public void SetContext(IHeaderDictionary headerDictionary)
         {
+            if (headerDictionary == null)
+            {
+                throw new ArgumentNullException(nameof(headerDictionary));
+            }
+
+            string internalRequestIdStr =
+                headerDictionary[InternalRequestIdHeaderName];
+            Guid internalRequestId = Guid.Parse(internalRequestIdStr);
+
+            string externalRequestIdStr =
+                headerDictionary[ExternalRequestIdHeaderName];
+
+            RequestContext requestContext = new RequestContext()
+            {
+                InternalRequestId = internalRequestId,
+                ExternalRequestId = externalRequestIdStr,
+            };
+
             this.requestContext = requestContext;
         }
 

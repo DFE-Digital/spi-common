@@ -9,6 +9,16 @@
     public class RequestContext
     {
         /// <summary>
+        /// Initialises a new instance of the <see cref="RequestContext" />
+        /// class.
+        /// </summary>
+        internal RequestContext()
+        {
+            // Nothing - just prevents this being created outside of the
+            // assembly.
+        }
+
+        /// <summary>
         /// Gets or sets an internal request id.
         /// </summary>
         public Guid InternalRequestId
