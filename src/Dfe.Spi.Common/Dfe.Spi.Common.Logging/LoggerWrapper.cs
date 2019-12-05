@@ -2,7 +2,8 @@
 {
     using System;
     using Dfe.Spi.Common.Logging.Definitions;
-    using Dfe.Spi.Common.Models;
+    using Dfe.Spi.Common.Logging.Models;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
@@ -10,9 +11,12 @@
     /// </summary>
     public class LoggerWrapper : ILoggerWrapper
     {
+        private const string InternalRequestIdHeaderName = "X-Internal-Request-Id";
+        private const string ExternalRequestIdHeaderName = "X-External-Request-Id";
+
         private readonly ILogger logger;
 
-        private RequestResponseBase requestResponseBase;
+        private RequestContext requestContext;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="LoggerWrapper" />
@@ -27,9 +31,27 @@
         }
 
         /// <inheritdoc />
-        public void SetContext(RequestResponseBase requestResponseBase)
+        public void SetContext(IHeaderDictionary headerDictionary)
         {
-            this.requestResponseBase = requestResponseBase;
+            if (headerDictionary == null)
+            {
+                throw new ArgumentNullException(nameof(headerDictionary));
+            }
+
+            string internalRequestIdStr =
+                headerDictionary[InternalRequestIdHeaderName];
+            Guid internalRequestId = Guid.Parse(internalRequestIdStr);
+
+            string externalRequestIdStr =
+                headerDictionary[ExternalRequestIdHeaderName];
+
+            RequestContext requestContext = new RequestContext()
+            {
+                InternalRequestId = internalRequestId,
+                ExternalRequestId = externalRequestIdStr,
+            };
+
+            this.requestContext = requestContext;
         }
 
         /// <inheritdoc />
@@ -69,15 +91,15 @@
         {
             message =
                 $"{message} " +
-                $"({nameof(RequestResponseBase.InternalRequestId)}: {{{nameof(RequestResponseBase.InternalRequestId)}}}, " +
-                $"{nameof(RequestResponseBase.ExternalRequestId)}: {{{nameof(RequestResponseBase.ExternalRequestId)}}})";
+                $"({nameof(RequestContext.InternalRequestId)}: {{{nameof(RequestContext.InternalRequestId)}}}, " +
+                $"{nameof(RequestContext.ExternalRequestId)}: {{{nameof(RequestContext.ExternalRequestId)}}})";
 
             this.logger.Log(
                 logLevel,
                 exception,
                 message,
-                this.requestResponseBase.InternalRequestId,
-                this.requestResponseBase.ExternalRequestId);
+                this.requestContext.InternalRequestId,
+                this.requestContext.ExternalRequestId);
         }
     }
 }

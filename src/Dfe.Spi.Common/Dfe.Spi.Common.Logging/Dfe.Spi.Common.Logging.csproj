@@ -11,24 +11,25 @@
 
   <ItemGroup>
     <!-- Microsoft -->
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0" PrivateAssets="All" />
     
     <!-- Development/Non-Runtime -->
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="All" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <ProjectReference Include="..\Dfe.Spi.Common.Models\Dfe.Spi.Common.Models.csproj" />
-  </ItemGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Factories\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\ca.ruleset</CodeAnalysisRuleSet>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
 </Project>
