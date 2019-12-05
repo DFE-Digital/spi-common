@@ -21,7 +21,7 @@
         /// <summary>
         /// Gets or sets an internal request id.
         /// </summary>
-        public Guid InternalRequestId
+        public Guid? InternalRequestId
         {
             get;
             set;

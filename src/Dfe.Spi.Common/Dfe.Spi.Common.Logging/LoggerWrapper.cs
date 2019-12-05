@@ -21,7 +21,7 @@ namespace Dfe.Spi.Common.Logging
         private RequestContext requestContext;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="LoggerWrapper"/> class.
+        /// Initialises a new instance of the <see cref="LoggerWrapper"/> class.
         /// class.
         /// </summary>
         /// <param name="logger">
@@ -41,12 +41,12 @@ namespace Dfe.Spi.Common.Logging
             }
 
             var internalRequestId = headerDictionary.ContainsKey(InternalRequestIdHeaderName)
-                ? Guid.Parse(headerDictionary[InternalRequestIdHeaderName].First())
-                : Guid.NewGuid();
+                ? (Guid?)Guid.Parse(headerDictionary[InternalRequestIdHeaderName].First())
+                : null;
 
             var externalRequestId = headerDictionary.ContainsKey(ExternalRequestIdHeaderName)
                 ? headerDictionary[ExternalRequestIdHeaderName].First()
-                : "NOT-SUPPLIED";
+                : null;
 
             RequestContext requestContext = new RequestContext()
             {
@@ -56,6 +56,17 @@ namespace Dfe.Spi.Common.Logging
 
             this.requestContext = requestContext;
         }
+
+        public void SetInternalRequestId(Guid internalRequestId)
+        {
+            if (this.requestContext == null)
+            {
+                this.requestContext = new RequestContext();
+            }
+
+            this.requestContext.InternalRequestId = internalRequestId;
+        }
+
 
         /// <inheritdoc />
         public void Debug(string message)
