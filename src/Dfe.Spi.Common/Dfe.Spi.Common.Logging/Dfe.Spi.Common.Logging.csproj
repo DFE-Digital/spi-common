@@ -23,10 +23,6 @@
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Factories\" />
-  </ItemGroup>
-
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\ca.ruleset</CodeAnalysisRuleSet>
     <Version>1.0.3</Version>
