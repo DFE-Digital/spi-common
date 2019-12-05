@@ -21,8 +21,7 @@
         /// <param name="logger">
         /// An instance of type <see cref="ILogger" />.
         /// </param>
-        public LoggerWrapper(
-            ILogger logger)
+        public LoggerWrapper(ILogger logger)
         {
             this.logger = logger;
         }
