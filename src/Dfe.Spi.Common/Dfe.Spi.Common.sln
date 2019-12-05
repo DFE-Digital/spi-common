@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.Models", "Df
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.UnitTesting", "Dfe.Spi.Common.UnitTesting\Dfe.Spi.Common.UnitTesting.csproj", "{64CA4C56-530B-487A-A090-DBE758D2D7E5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Release", "Release", "{7A4DDCAA-4208-4440-B644-C3B0DB7A680C}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A7329C41-FA69-408C-81AF-71BF990C0357}"
 	ProjectSection(SolutionItems) = preProject
 		..\..\pipelines\Dfe.Spi.Common.Logging.yml = ..\..\pipelines\Dfe.Spi.Common.Logging.yml
@@ -17,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A7329C41
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.Logging", "Dfe.Spi.Common.Logging\Dfe.Spi.Common.Logging.csproj", "{404F1450-E9CF-4537-98B4-72C0C36C656B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{AC3FB157-5E18-4981-A6A0-80C5CEC8DE96}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,7 +41,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{A7329C41-FA69-408C-81AF-71BF990C0357} = {7A4DDCAA-4208-4440-B644-C3B0DB7A680C}
+		{A7329C41-FA69-408C-81AF-71BF990C0357} = {AC3FB157-5E18-4981-A6A0-80C5CEC8DE96}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {10CC36FA-B89F-4CEF-874E-3E16C654B7CA}
