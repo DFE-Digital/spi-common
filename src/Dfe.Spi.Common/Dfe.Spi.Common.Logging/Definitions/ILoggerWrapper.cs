@@ -19,6 +19,15 @@
         void SetContext(IHeaderDictionary headerDictionary);
 
         /// <summary>
+        /// Sets the internal request id (i.e. custom dimension information) against the
+        /// instance.
+        /// </summary>
+        /// <param name="internalRequestId">
+        /// Guid to use as internal request id
+        /// </param>
+        void SetInternalRequestId(Guid internalRequestId);
+
+        /// <summary>
         /// Logs a <paramref name="message" /> with debug-level importance.
         /// </summary>
         /// <param name="message">

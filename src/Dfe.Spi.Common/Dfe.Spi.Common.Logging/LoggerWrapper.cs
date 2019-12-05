@@ -1,4 +1,6 @@
-﻿namespace Dfe.Spi.Common.Logging
+﻿using System.Linq;
+
+namespace Dfe.Spi.Common.Logging
 {
     using System;
     using Dfe.Spi.Common.Logging.Definitions;
@@ -19,7 +21,7 @@
         private RequestContext requestContext;
 
         /// <summary>
-        /// Initialises a new instance of the <see cref="LoggerWrapper" />
+        /// Initialises a new instance of the <see cref="LoggerWrapper"/> class.
         /// class.
         /// </summary>
         /// <param name="logger">
@@ -38,21 +40,33 @@
                 throw new ArgumentNullException(nameof(headerDictionary));
             }
 
-            string internalRequestIdStr =
-                headerDictionary[InternalRequestIdHeaderName];
-            Guid internalRequestId = Guid.Parse(internalRequestIdStr);
+            var internalRequestId = headerDictionary.ContainsKey(InternalRequestIdHeaderName)
+                ? (Guid?)Guid.Parse(headerDictionary[InternalRequestIdHeaderName].First())
+                : null;
 
-            string externalRequestIdStr =
-                headerDictionary[ExternalRequestIdHeaderName];
+            var externalRequestId = headerDictionary.ContainsKey(ExternalRequestIdHeaderName)
+                ? headerDictionary[ExternalRequestIdHeaderName].First()
+                : null;
 
             RequestContext requestContext = new RequestContext()
             {
                 InternalRequestId = internalRequestId,
-                ExternalRequestId = externalRequestIdStr,
+                ExternalRequestId = externalRequestId,
             };
 
             this.requestContext = requestContext;
         }
+
+        public void SetInternalRequestId(Guid internalRequestId)
+        {
+            if (this.requestContext == null)
+            {
+                this.requestContext = new RequestContext();
+            }
+
+            this.requestContext.InternalRequestId = internalRequestId;
+        }
+
 
         /// <inheritdoc />
         public void Debug(string message)
