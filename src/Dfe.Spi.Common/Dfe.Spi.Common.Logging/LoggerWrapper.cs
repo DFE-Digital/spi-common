@@ -15,6 +15,23 @@ namespace Dfe.Spi.Common.Logging
     {
         private const string InternalRequestIdHeaderName = "X-Internal-Request-Id";
         private const string ExternalRequestIdHeaderName = "X-External-Request-Id";
+        private static readonly string LogMessagePattern =
+            "{message} " +
+            $"({nameof(RequestContext.InternalRequestId)}: {{{nameof(RequestContext.InternalRequestId)}}}, " +
+            $"{nameof(RequestContext.ExternalRequestId)}: {{{nameof(RequestContext.ExternalRequestId)}}})";
+
+        private static readonly Action<ILogger, string, Guid?, string, Exception> LogDebug =
+            LoggerMessage.Define<string, Guid?, string>(LogLevel.Debug, new EventId(1), LogMessagePattern);
+
+        private static readonly Action<ILogger, string, Guid?, string, Exception> LogInfo =
+            LoggerMessage.Define<string, Guid?, string>(LogLevel.Information, new EventId(2), LogMessagePattern);
+
+        private static readonly Action<ILogger, string, Guid?, string, Exception> LogWarning =
+            LoggerMessage.Define<string, Guid?, string>(LogLevel.Information, new EventId(3), LogMessagePattern);
+
+        private static readonly Action<ILogger, string, Guid?, string, Exception> LogError =
+            LoggerMessage.Define<string, Guid?, string>(LogLevel.Information, new EventId(4), LogMessagePattern);
+
 
         private readonly ILogger logger;
 
@@ -71,49 +88,37 @@ namespace Dfe.Spi.Common.Logging
         /// <inheritdoc />
         public void Debug(string message)
         {
-            this.LogMessage(LogLevel.Debug, message);
+            LogDebug(this.logger, message, this.requestContext.InternalRequestId, this.requestContext.ExternalRequestId, null);
         }
 
         /// <inheritdoc />
         public void Error(string message, Exception exception)
         {
-            this.LogMessage(LogLevel.Error, message, exception);
+            LogError(this.logger, message, this.requestContext.InternalRequestId, this.requestContext.ExternalRequestId, exception);
+        }
+
+        /// <inheritdoc />
+        public void Error(string message)
+        {
+            LogError(this.logger, message, this.requestContext.InternalRequestId, this.requestContext.ExternalRequestId, null);
         }
 
         /// <inheritdoc />
         public void Info(string message)
         {
-            this.LogMessage(LogLevel.Information, message);
+            LogInfo(this.logger, message, this.requestContext.InternalRequestId, this.requestContext.ExternalRequestId, null);
         }
 
         /// <inheritdoc />
         public void Warning(string message)
         {
-            this.LogMessage(LogLevel.Warning, message);
+            LogWarning(this.logger, message, this.requestContext.InternalRequestId, this.requestContext.ExternalRequestId, null);
         }
 
         /// <inheritdoc />
         public void Warning(string message, Exception exception)
         {
-            this.LogMessage(LogLevel.Warning, message, exception);
-        }
-
-        private void LogMessage(
-            LogLevel logLevel,
-            string message,
-            Exception exception = null)
-        {
-            message =
-                $"{message} " +
-                $"({nameof(RequestContext.InternalRequestId)}: {{{nameof(RequestContext.InternalRequestId)}}}, " +
-                $"{nameof(RequestContext.ExternalRequestId)}: {{{nameof(RequestContext.ExternalRequestId)}}})";
-
-            this.logger.Log(
-                logLevel,
-                exception,
-                message,
-                this.requestContext.InternalRequestId,
-                this.requestContext.ExternalRequestId);
+            LogWarning(this.logger, message, this.requestContext.InternalRequestId, this.requestContext.ExternalRequestId, exception);
         }
     }
 }

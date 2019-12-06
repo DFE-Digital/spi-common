@@ -63,6 +63,18 @@
         void Warning(string message, Exception exception);
 
         /// <summary>
+        /// Logs a <paramref name="message" />
+        /// </summary>
+        /// <param name="message">
+        /// The message to log.
+        /// </param>
+        [SuppressMessage(
+            "Microsoft.Naming",
+            "CA1716",
+            Justification = "Naming logging functions after the level itself is an accepted standard.")]
+        void Error(string message);
+
+        /// <summary>
         /// Logs a <paramref name="message" /> and an <see cref="Exception" />.
         /// </summary>
         /// <param name="message">
