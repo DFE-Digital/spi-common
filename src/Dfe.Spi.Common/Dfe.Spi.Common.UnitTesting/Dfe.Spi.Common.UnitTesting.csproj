@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
@@ -6,8 +6,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <!-- Microsoft -->
+      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.0" PrivateAssets="All" />
+      
+      <!-- Other -->
       <PackageReference Include="AutoFixture" Version="4.11.0" />
       <PackageReference Include="AutoFixture.NUnit3" Version="4.11.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Dfe.Spi.Common.Logging\Dfe.Spi.Common.Logging.csproj" />
     </ItemGroup>
 
 </Project>
