@@ -3,12 +3,12 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>1.0.2</Version>
+        <Version>1.0.3</Version>
     </PropertyGroup>
 
     <ItemGroup>
       <!-- Microsoft -->
-      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.0" PrivateAssets="All" />
+      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.0" />
       
       <!-- Other -->
       <PackageReference Include="AutoFixture" Version="4.11.0" PrivateAssets="All" />
