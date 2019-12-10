@@ -1,8 +1,7 @@
-﻿using System.Linq;
-
-namespace Dfe.Spi.Common.Logging
+﻿namespace Dfe.Spi.Common.Logging
 {
     using System;
+    using System.Linq;
     using Dfe.Spi.Common.Logging.Definitions;
     using Dfe.Spi.Common.Logging.Models;
     using Microsoft.AspNetCore.Http;
@@ -31,7 +30,6 @@ namespace Dfe.Spi.Common.Logging
 
         private static readonly Action<ILogger, string, Guid?, string, Exception> LogError =
             LoggerMessage.Define<string, Guid?, string>(LogLevel.Information, new EventId(4), LogMessagePattern);
-
 
         private readonly ILogger logger;
 
@@ -74,6 +72,7 @@ namespace Dfe.Spi.Common.Logging
             this.requestContext = requestContext;
         }
 
+        /// <inheritdoc />
         public void SetInternalRequestId(Guid internalRequestId)
         {
             if (this.requestContext == null)
@@ -83,7 +82,6 @@ namespace Dfe.Spi.Common.Logging
 
             this.requestContext.InternalRequestId = internalRequestId;
         }
-
 
         /// <inheritdoc />
         public void Debug(string message)

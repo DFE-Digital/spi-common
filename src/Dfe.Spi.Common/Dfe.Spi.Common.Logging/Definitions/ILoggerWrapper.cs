@@ -23,7 +23,7 @@
         /// instance.
         /// </summary>
         /// <param name="internalRequestId">
-        /// Guid to use as internal request id
+        /// Guid to use as internal request id.
         /// </param>
         void SetInternalRequestId(Guid internalRequestId);
 
@@ -63,7 +63,7 @@
         void Warning(string message, Exception exception);
 
         /// <summary>
-        /// Logs a <paramref name="message" />
+        /// Logs a <paramref name="message" />.
         /// </summary>
         /// <param name="message">
         /// The message to log.
