@@ -1,4 +1,4 @@
-﻿namespace Dfe.Spi.EntitySquasher.FunctionApp.Infrastructure
+﻿namespace Dfe.Spi.Common.UnitTesting.Infrastructure
 {
     using System;
     using System.Data;
