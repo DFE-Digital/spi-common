@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<Version>1.0.7</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -11,8 +12,8 @@
 
   <ItemGroup>
     <!-- Microsoft -->
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.0" />
     
     <!-- Development/Non-Runtime -->
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
@@ -25,7 +26,6 @@
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\ca.ruleset</CodeAnalysisRuleSet>
-    <Version>1.0.7</Version>
   </PropertyGroup>
 
 </Project>
