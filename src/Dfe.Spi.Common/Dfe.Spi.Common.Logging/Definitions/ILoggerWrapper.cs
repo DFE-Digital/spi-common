@@ -23,7 +23,7 @@
         /// instance.
         /// </summary>
         /// <param name="internalRequestId">
-        /// Guid to use as internal request id
+        /// Guid to use as internal request id.
         /// </param>
         void SetInternalRequestId(Guid internalRequestId);
 
@@ -33,7 +33,10 @@
         /// <param name="message">
         /// The message to log.
         /// </param>
-        void Debug(string message);
+        /// <param name="exception">
+        /// The <see cref="Exception" /> to log. Optional.
+        /// </param>
+        void Debug(string message, Exception exception = null);
 
         /// <summary>
         /// Logs a <paramref name="message" /> with info-level importance.
@@ -41,15 +44,10 @@
         /// <param name="message">
         /// The message to log.
         /// </param>
-        void Info(string message);
-
-        /// <summary>
-        /// Logs a <paramref name="message" /> with warning-level importance.
-        /// </summary>
-        /// <param name="message">
-        /// The message to log.
+        /// <param name="exception">
+        /// The <see cref="Exception" /> to log. Optional.
         /// </param>
-        void Warning(string message);
+        void Info(string message, Exception exception = null);
 
         /// <summary>
         /// Logs a <paramref name="message" /> with warning-level importance.
@@ -58,21 +56,9 @@
         /// The message to log.
         /// </param>
         /// <param name="exception">
-        /// The <see cref="Exception" /> to log.
+        /// The <see cref="Exception" /> to log. Optional.
         /// </param>
-        void Warning(string message, Exception exception);
-
-        /// <summary>
-        /// Logs a <paramref name="message" />
-        /// </summary>
-        /// <param name="message">
-        /// The message to log.
-        /// </param>
-        [SuppressMessage(
-            "Microsoft.Naming",
-            "CA1716",
-            Justification = "Naming logging functions after the level itself is an accepted standard.")]
-        void Error(string message);
+        void Warning(string message, Exception exception = null);
 
         /// <summary>
         /// Logs a <paramref name="message" /> and an <see cref="Exception" />.
@@ -81,12 +67,12 @@
         /// The message to log.
         /// </param>
         /// <param name="exception">
-        /// The <see cref="Exception" /> to log.
+        /// The <see cref="Exception" /> to log. Optional.
         /// </param>
         [SuppressMessage(
             "Microsoft.Naming",
             "CA1716",
             Justification = "Naming logging functions after the level itself is an accepted standard.")]
-        void Error(string message, Exception exception);
+        void Error(string message, Exception exception = null);
     }
 }
