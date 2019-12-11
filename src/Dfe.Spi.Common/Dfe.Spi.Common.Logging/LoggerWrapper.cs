@@ -84,39 +84,47 @@
         }
 
         /// <inheritdoc />
-        public void Debug(string message)
+        public void Debug(string message, Exception exception = null)
         {
-            LogDebug(this.logger, message, this.requestContext.InternalRequestId, this.requestContext.ExternalRequestId, null);
+            LogDebug(
+                this.logger,
+                message,
+                this.requestContext.InternalRequestId,
+                this.requestContext.ExternalRequestId,
+                exception);
         }
 
         /// <inheritdoc />
-        public void Error(string message, Exception exception)
+        public void Error(string message, Exception exception = null)
         {
-            LogError(this.logger, message, this.requestContext.InternalRequestId, this.requestContext.ExternalRequestId, exception);
+            LogError(
+                this.logger,
+                message,
+                this.requestContext.InternalRequestId,
+                this.requestContext.ExternalRequestId,
+                exception);
         }
 
         /// <inheritdoc />
-        public void Error(string message)
+        public void Info(string message, Exception exception = null)
         {
-            LogError(this.logger, message, this.requestContext.InternalRequestId, this.requestContext.ExternalRequestId, null);
+            LogInfo(
+                this.logger,
+                message,
+                this.requestContext.InternalRequestId,
+                this.requestContext.ExternalRequestId,
+                exception);
         }
 
         /// <inheritdoc />
-        public void Info(string message)
+        public void Warning(string message, Exception exception = null)
         {
-            LogInfo(this.logger, message, this.requestContext.InternalRequestId, this.requestContext.ExternalRequestId, null);
-        }
-
-        /// <inheritdoc />
-        public void Warning(string message)
-        {
-            LogWarning(this.logger, message, this.requestContext.InternalRequestId, this.requestContext.ExternalRequestId, null);
-        }
-
-        /// <inheritdoc />
-        public void Warning(string message, Exception exception)
-        {
-            LogWarning(this.logger, message, this.requestContext.InternalRequestId, this.requestContext.ExternalRequestId, exception);
+            LogWarning(
+                this.logger,
+                message,
+                this.requestContext.InternalRequestId,
+                this.requestContext.ExternalRequestId,
+                exception);
         }
     }
 }

@@ -49,32 +49,22 @@
             // Do nothing.
         }
 
-        public void Debug(string message)
+        public void Debug(string message, Exception exception = null)
         {
-            this.AppendToDataTable(nameof(this.Debug), message);
+            this.AppendToDataTable(nameof(this.Debug), message, exception);
         }
 
-        public void Error(string message)
+        public void Info(string message, Exception exception = null)
         {
-            this.AppendToDataTable(nameof(this.Error), message);
+            this.AppendToDataTable(nameof(this.Info), message, exception);
         }
 
-        public void Error(string message, Exception exception)
+        public void Error(string message, Exception exception = null)
         {
             this.AppendToDataTable(nameof(this.Error), message, exception);
         }
 
-        public void Info(string message)
-        {
-            this.AppendToDataTable(nameof(this.Info), message);
-        }
-
-        public void Warning(string message)
-        {
-            this.AppendToDataTable(nameof(this.Warning), message);
-        }
-
-        public void Warning(string message, Exception exception)
+        public void Warning(string message, Exception exception = null)
         {
             this.AppendToDataTable(nameof(this.Warning), message, exception);
         }
