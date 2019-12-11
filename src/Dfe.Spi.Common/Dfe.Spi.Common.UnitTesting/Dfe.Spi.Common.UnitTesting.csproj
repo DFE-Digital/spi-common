@@ -3,20 +3,19 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>1.0.3</Version>
+        <Version>1.0.4</Version>
     </PropertyGroup>
 
     <ItemGroup>
+      <!-- Dfe.Spi.* -->
+      <PackageReference Include="Dfe.Spi.Common.Logging" Version="1.0.7" />
+      
       <!-- Microsoft -->
       <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.0" />
       
       <!-- Other -->
       <PackageReference Include="AutoFixture" Version="4.11.0" PrivateAssets="All" />
       <PackageReference Include="AutoFixture.NUnit3" Version="4.11.0" PrivateAssets="All" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Dfe.Spi.Common.Logging\Dfe.Spi.Common.Logging.csproj" />
     </ItemGroup>
 
 </Project>
