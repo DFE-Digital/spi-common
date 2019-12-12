@@ -133,7 +133,9 @@
 
                 if (exception != null)
                 {
-                    stringBuilder.Append($"{exception}");
+                    stringBuilder.Append(
+                        $"{Environment.NewLine}{Environment.NewLine}Exception " +
+                        $"detail:{Environment.NewLine}{exception}");
                 }
 
                 stringBuilder.Append($"{Environment.NewLine}");
