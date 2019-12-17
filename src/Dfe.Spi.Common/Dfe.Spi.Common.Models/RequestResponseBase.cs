@@ -3,7 +3,7 @@
     /// <summary>
     /// Abstract base class for all requests and responses.
     /// </summary>
-    public abstract class RequestResponseBase
+    public abstract class RequestResponseBase : ModelsBase
     {
         // Nothing for now...
     }
