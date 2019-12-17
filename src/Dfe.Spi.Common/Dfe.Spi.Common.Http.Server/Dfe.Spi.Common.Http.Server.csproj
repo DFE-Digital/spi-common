@@ -26,4 +26,8 @@
     <CodeAnalysisRuleSet>..\ca.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>C:\Users\Matt\Source\Repos\spi-common\src\Dfe.Spi.Common\Dfe.Spi.Common.Http.Server\Dfe.Spi.Common.Http.Server.xml</DocumentationFile>
+  </PropertyGroup>
+
 </Project>

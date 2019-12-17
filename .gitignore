@@ -264,5 +264,4 @@ __pycache__/
 .DS_Store
 
 # XML Docs
-Dfe.Spi.Common.Models.xml
-Dfe.Spi.Common.Logging.xml
+Dfe.Spi.Common.*.xml
