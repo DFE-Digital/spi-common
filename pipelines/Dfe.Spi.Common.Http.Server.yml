@@ -1,0 +1,47 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - "*"
+  paths:
+    include:
+      - /pipelines/Dfe.Spi.Common.Http.Server.yml
+      - /src/Dfe.Spi.Common/Dfe.Spi.Common.Http.Server/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: NuGetToolInstaller@1
+    displayName: 'Use NuGet 4.7.1'
+    inputs:
+      versionSpec: '4.7.1'
+
+  - task: NuGetCommand@2
+    displayName: 'Restore NuGet Packages'
+    inputs:
+      command: 'restore'
+      restoreSolution: '**/*.sln'
+      feedsToUse: 'select'
+      vstsFeed: 'c5095ddb-6433-4990-a3a5-1df8a78b1302/$(FeedSecret)'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build Common Unit Testing Library'
+    inputs:
+      command: 'build'
+      projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Http.Server/Dfe.Spi.Common.Http.Server.csproj'
+      arguments: '--configuration Release --output $(Build.BinariesDirectory)'
+      
+  - task: CopyFiles@2
+    displayName: 'Copy NuGet Package to Artifacts Staging'
+    inputs:
+      SourceFolder: '$(Build.BinariesDirectory)'
+      Contents: 'Dfe.Spi.Common.Http.Server.*.nupkg'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifacts'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
