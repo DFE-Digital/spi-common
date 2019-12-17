@@ -32,7 +32,7 @@
             : base(
                 CreateHttpErrorBody(httpStatusCode, errorIdentifier, message))
         {
-            // Nothing - just bubbles down.
+            this.StatusCode = (int)httpStatusCode;
         }
 
         private static HttpErrorBody CreateHttpErrorBody(
