@@ -1,6 +1,6 @@
 ﻿namespace Dfe.Spi.Common.Http.Client
 {
-    using System.Diagnostics.CodeAnalysis;
+    using System;
     using System.Globalization;
     using System.Net;
     using Dfe.Spi.Common.Models;
@@ -10,16 +10,52 @@
     /// returning a non-successful status code, and optionally, a
     /// <see cref="HttpErrorBody" /> instance.
     /// </summary>
-    [SuppressMessage(
-        "Microsoft.Design",
-        "CA1032",
-        Justification = "This is internally used, and will not be serialised.")]
     public class SpiWebServiceException : WebException
     {
         private new const string Message =
             "The SPI web service returned a non-successful status code, " +
             "{0}. See the HttpErrorBody property for more information (if " +
             "available).";
+
+        /// <summary>
+        /// Initialises a new instance of the
+        /// <see cref="SpiWebServiceException" /> class.
+        /// </summary>
+        public SpiWebServiceException()
+        {
+            // Nothing - used for serialisation.
+        }
+
+        /// <summary>
+        /// Initialises a new instance of the
+        /// <see cref="SpiWebServiceException" /> class.
+        /// </summary>
+        /// <param name="message">
+        /// The text of the error message.
+        /// </param>
+        public SpiWebServiceException(string message)
+            : base(message)
+        {
+            // Used if we're inheriting from this class.
+        }
+
+        /// <summary>
+        /// Initialises a new instance of the
+        /// <see cref="SpiWebServiceException" /> class.
+        /// </summary>
+        /// <param name="message">
+        /// The text of the error message.
+        /// </param>
+        /// <param name="innerException">
+        /// A nested exception.
+        /// </param>
+        public SpiWebServiceException(
+            string message,
+            Exception innerException)
+            : base(message, innerException)
+        {
+            // Used if we're inheriting from this class.
+        }
 
         /// <summary>
         /// Initialises a new instance of the
@@ -41,13 +77,23 @@
         }
 
         /// <summary>
-        /// Gets the <see cref="Models.HttpErrorBody" />, containing detail
-        /// regarding the call to the web service.
+        /// Gets or sets the actual <see cref="HttpStatusCode" /> resulting in
+        /// the exception being thrown.
+        /// </summary>
+        public HttpStatusCode HttpStatusCode
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Models.HttpErrorBody" />, containing
+        /// detail regarding the call to the web service.
         /// </summary>
         public HttpErrorBody HttpErrorBody
         {
             get;
-            private set;
+            set;
         }
 
         private static string BuildExceptionMessage(
