@@ -25,13 +25,19 @@
         /// Initialises a new instance of the
         /// <see cref="SpiWebServiceException" /> class.
         /// </summary>
+        /// <param name="httpStatusCode">
+        /// The actual <see cref="HttpStatusCode" /> resulting in the exception
+        /// being thrown.
+        /// </param>
         /// <param name="httpErrorBody">
         /// An instance of type <see cref="HttpErrorBody" />.
         /// </param>
-        public SpiWebServiceException(HttpErrorBody httpErrorBody)
-            : base(BuildExceptionMessage(httpErrorBody))
+        public SpiWebServiceException(
+            HttpStatusCode httpStatusCode,
+            HttpErrorBody httpErrorBody)
+            : base(BuildExceptionMessage(httpStatusCode))
         {
-            // Nothing - just bubbles down.
+            this.HttpErrorBody = httpErrorBody;
         }
 
         /// <summary>
@@ -45,15 +51,11 @@
         }
 
         private static string BuildExceptionMessage(
-            HttpErrorBody httpErrorBody)
+            HttpStatusCode httpStatusCode)
         {
             string toReturn = null;
 
-            int statusCode = 0;
-            if (httpErrorBody != null)
-            {
-                statusCode = (int)httpErrorBody.StatusCode;
-            }
+            int statusCode = (int)httpStatusCode;
 
             toReturn = string.Format(
                 CultureInfo.InvariantCulture,
