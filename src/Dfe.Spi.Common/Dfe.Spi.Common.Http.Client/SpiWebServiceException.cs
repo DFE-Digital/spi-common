@@ -73,6 +73,7 @@
             HttpErrorBody httpErrorBody)
             : base(BuildExceptionMessage(httpStatusCode))
         {
+            this.HttpStatusCode = httpStatusCode;
             this.HttpErrorBody = httpErrorBody;
         }
 
