@@ -19,17 +19,17 @@
             $"({nameof(RequestContext.InternalRequestId)}: {{{nameof(RequestContext.InternalRequestId)}}}, " +
             $"{nameof(RequestContext.ExternalRequestId)}: {{{nameof(RequestContext.ExternalRequestId)}}})";
 
-        private static readonly Action<ILogger, string, Guid?, string, Exception> LogDebug =
+        private readonly Action<ILogger, string, Guid?, string, Exception> logDebug =
             LoggerMessage.Define<string, Guid?, string>(LogLevel.Debug, new EventId(1), LogMessagePattern);
 
-        private static readonly Action<ILogger, string, Guid?, string, Exception> LogInfo =
+        private readonly Action<ILogger, string, Guid?, string, Exception> logInfo =
             LoggerMessage.Define<string, Guid?, string>(LogLevel.Information, new EventId(2), LogMessagePattern);
 
-        private static readonly Action<ILogger, string, Guid?, string, Exception> LogWarning =
-            LoggerMessage.Define<string, Guid?, string>(LogLevel.Information, new EventId(3), LogMessagePattern);
+        private readonly Action<ILogger, string, Guid?, string, Exception> logWarning =
+            LoggerMessage.Define<string, Guid?, string>(LogLevel.Warning, new EventId(3), LogMessagePattern);
 
-        private static readonly Action<ILogger, string, Guid?, string, Exception> LogError =
-            LoggerMessage.Define<string, Guid?, string>(LogLevel.Information, new EventId(4), LogMessagePattern);
+        private readonly Action<ILogger, string, Guid?, string, Exception> logError =
+            LoggerMessage.Define<string, Guid?, string>(LogLevel.Error, new EventId(4), LogMessagePattern);
 
         private readonly ILogger logger;
 
@@ -86,7 +86,7 @@
         /// <inheritdoc />
         public void Debug(string message, Exception exception = null)
         {
-            LogDebug(
+            this.logDebug(
                 this.logger,
                 message,
                 this.requestContext.InternalRequestId,
@@ -97,7 +97,7 @@
         /// <inheritdoc />
         public void Error(string message, Exception exception = null)
         {
-            LogError(
+            this.logError(
                 this.logger,
                 message,
                 this.requestContext.InternalRequestId,
@@ -108,7 +108,7 @@
         /// <inheritdoc />
         public void Info(string message, Exception exception = null)
         {
-            LogInfo(
+            this.logInfo(
                 this.logger,
                 message,
                 this.requestContext.InternalRequestId,
@@ -119,7 +119,7 @@
         /// <inheritdoc />
         public void Warning(string message, Exception exception = null)
         {
-            LogWarning(
+            this.logWarning(
                 this.logger,
                 message,
                 this.requestContext.InternalRequestId,
