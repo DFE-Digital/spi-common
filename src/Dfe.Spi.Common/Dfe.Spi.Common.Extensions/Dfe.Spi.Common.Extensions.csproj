@@ -3,27 +3,16 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Dfe.Spi.* -->
-    <PackageReference Include="Dfe.Spi.Common.Extensions" Version="1.0.0" />
-    <PackageReference Include="Dfe.Spi.Common.Models" Version="1.0.1" />
-
-    <!-- Microsoft -->
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.1.0" />
-    
-    <!-- Other -->
-    <PackageReference Include="NJsonSchema" Version="10.0.28" />
-    
     <!-- Development/Non-Runtime -->
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="All" />
   </ItemGroup>
 
   <PropertyGroup>
-    <DocumentationFile>Dfe.Spi.Common.Http.Server.xml</DocumentationFile>
+    <DocumentationFile>Dfe.Spi.Common.Extensions.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

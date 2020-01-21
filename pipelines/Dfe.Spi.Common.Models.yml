@@ -8,16 +8,31 @@ trigger:
       - /pipelines/Dfe.Spi.Common.Models.yml
       - /src/Dfe.Spi.Common/Dfe.Spi.Common.Models/*
 
+pr: none
+
 pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+  - task: NuGetToolInstaller@1
+    displayName: 'Use NuGet 4.7.1'
+    inputs:
+      versionSpec: '4.7.1'
+
+  - task: NuGetCommand@2
+    displayName: 'Restore Public & Private NuGet Packages'
+    inputs:
+      command: 'restore'
+      restoreSolution: '**/*.sln'
+      feedsToUse: 'select'
+      vstsFeed: 'c5095ddb-6433-4990-a3a5-1df8a78b1302/$(FeedSecret)'
+
   - task: DotNetCoreCLI@2
     displayName: 'Build Common Models Library'
     inputs:
       command: 'build'
       projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Models/Dfe.Spi.Common.Models.csproj'
-      arguments: '--configuration Release --output $(Build.BinariesDirectory)'
+      arguments: '--configuration Release --output $(Build.BinariesDirectory) --no-restore'
       
   - task: CopyFiles@2
     displayName: 'Copy NuGet Package to Artifacts Staging'
