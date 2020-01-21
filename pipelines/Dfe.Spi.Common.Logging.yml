@@ -1,5 +1,4 @@
 trigger:
-  pr: none
   batch: true
   branches:
     include:
@@ -8,6 +7,8 @@ trigger:
     include:
       - /pipelines/Dfe.Spi.Common.Logging.yml
       - /src/Dfe.Spi.Common/Dfe.Spi.Common.Logging/*
+
+pr: none
 
 pool:
   vmImage: 'ubuntu-latest'
