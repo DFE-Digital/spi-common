@@ -9,6 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.UnitTesting"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A7329C41-FA69-408C-81AF-71BF990C0357}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\pipelines\Dfe.Spi.Common.Extensions.yml = ..\..\pipelines\Dfe.Spi.Common.Extensions.yml
 		..\..\pipelines\Dfe.Spi.Common.Http.Client.yml = ..\..\pipelines\Dfe.Spi.Common.Http.Client.yml
 		..\..\pipelines\Dfe.Spi.Common.Http.Server.yml = ..\..\pipelines\Dfe.Spi.Common.Http.Server.yml
 		..\..\pipelines\Dfe.Spi.Common.Logging.yml = ..\..\pipelines\Dfe.Spi.Common.Logging.yml
@@ -21,9 +22,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.Logging", "D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deploy", "Deploy", "{AC3FB157-5E18-4981-A6A0-80C5CEC8DE96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.Spi.Common.Http.Server", "Dfe.Spi.Common.Http.Server\Dfe.Spi.Common.Http.Server.csproj", "{2B7B97BF-41CB-4E29-A7E7-2BFB4D8682DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.Http.Server", "Dfe.Spi.Common.Http.Server\Dfe.Spi.Common.Http.Server.csproj", "{2B7B97BF-41CB-4E29-A7E7-2BFB4D8682DE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.Spi.Common.Http.Client", "Dfe.Spi.Common.Http.Client\Dfe.Spi.Common.Http.Client.csproj", "{95D430E9-5797-43AB-8ADE-8D37E1675DD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.Http.Client", "Dfe.Spi.Common.Http.Client\Dfe.Spi.Common.Http.Client.csproj", "{95D430E9-5797-43AB-8ADE-8D37E1675DD1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.Extensions", "Dfe.Spi.Common.Extensions\Dfe.Spi.Common.Extensions.csproj", "{902D4E1C-02C3-4C3E-9431-FA3BF1769973}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +54,10 @@ Global
 		{95D430E9-5797-43AB-8ADE-8D37E1675DD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95D430E9-5797-43AB-8ADE-8D37E1675DD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95D430E9-5797-43AB-8ADE-8D37E1675DD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{902D4E1C-02C3-4C3E-9431-FA3BF1769973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{902D4E1C-02C3-4C3E-9431-FA3BF1769973}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{902D4E1C-02C3-4C3E-9431-FA3BF1769973}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{902D4E1C-02C3-4C3E-9431-FA3BF1769973}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
