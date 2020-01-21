@@ -1,0 +1,17 @@
+{
+  "properties": {
+    "fieldOne": {
+      "type": "string"
+    },
+    "fieldTwo": {
+      "type": "string",
+      "enum": [
+        "some value",
+        "some other value"
+      ]
+    }
+  },
+  "required": [
+    "fieldTwo"
+  ]
+}
