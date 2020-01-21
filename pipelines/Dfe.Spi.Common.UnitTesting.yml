@@ -1,4 +1,5 @@
 trigger:
+  pr: none
   batch: true
   branches:
     include:
@@ -18,7 +19,7 @@ steps:
       versionSpec: '4.7.1'
 
   - task: NuGetCommand@2
-    displayName: 'Restore NuGet Packages'
+    displayName: 'Restore Private NuGet Packages'
     inputs:
       command: 'restore'
       restoreSolution: '**/*.sln'
@@ -37,7 +38,7 @@ steps:
     inputs:
       command: 'build'
       projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.UnitTesting/Dfe.Spi.Common.UnitTesting.csproj'
-      arguments: '--configuration Release --output $(Build.BinariesDirectory)'
+      arguments: '--configuration Release --output $(Build.BinariesDirectory) --no-restore'
       
   - task: CopyFiles@2
     displayName: 'Copy NuGet Package to Artifacts Staging'
