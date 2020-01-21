@@ -6,10 +6,6 @@
     <Version>1.0.9</Version>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <DocumentationFile>Dfe.Spi.Common.Logging.xml</DocumentationFile>
-  </PropertyGroup>
-
   <ItemGroup>
     <!-- Microsoft -->
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.0" />
@@ -19,6 +15,10 @@
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="All" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>Dfe.Spi.Common.Logging.xml</DocumentationFile>
+  </PropertyGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />

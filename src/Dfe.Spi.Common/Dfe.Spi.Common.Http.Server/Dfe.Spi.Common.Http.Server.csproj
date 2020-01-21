@@ -18,16 +18,16 @@
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="All" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <DocumentationFile>Dfe.Spi.Common.Http.Server.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
   </ItemGroup>
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\ca.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>Dfe.Spi.Common.Http.Server.xml</DocumentationFile>
   </PropertyGroup>
 
 </Project>
