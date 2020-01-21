@@ -21,7 +21,7 @@ steps:
       versionSpec: '4.7.1'
 
   - task: NuGetCommand@2
-    displayName: 'Restore Private NuGet Packages'
+    displayName: 'Restore Public & Private NuGet Packages'
     inputs:
       command: 'restore'
       restoreSolution: '**/*.sln'
