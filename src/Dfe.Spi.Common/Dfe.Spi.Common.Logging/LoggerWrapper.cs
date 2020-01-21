@@ -1,6 +1,7 @@
 ﻿namespace Dfe.Spi.Common.Logging
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Dfe.Spi.Common.Logging.Definitions;
     using Dfe.Spi.Common.Logging.Models;
@@ -19,19 +20,12 @@
             $"({nameof(RequestContext.InternalRequestId)}: {{{nameof(RequestContext.InternalRequestId)}}}, " +
             $"{nameof(RequestContext.ExternalRequestId)}: {{{nameof(RequestContext.ExternalRequestId)}}})";
 
-        private readonly Action<ILogger, string, Guid?, string, Exception> logDebug =
-            LoggerMessage.Define<string, Guid?, string>(LogLevel.Debug, new EventId(1), LogMessagePattern);
-
-        private readonly Action<ILogger, string, Guid?, string, Exception> logInfo =
-            LoggerMessage.Define<string, Guid?, string>(LogLevel.Information, new EventId(2), LogMessagePattern);
-
-        private readonly Action<ILogger, string, Guid?, string, Exception> logWarning =
-            LoggerMessage.Define<string, Guid?, string>(LogLevel.Warning, new EventId(3), LogMessagePattern);
-
-        private readonly Action<ILogger, string, Guid?, string, Exception> logError =
-            LoggerMessage.Define<string, Guid?, string>(LogLevel.Error, new EventId(4), LogMessagePattern);
-
         private readonly ILogger logger;
+
+        private readonly Action<ILogger, string, Guid?, string, Exception> logDebug;
+        private readonly Action<ILogger, string, Guid?, string, Exception> logInfo;
+        private readonly Action<ILogger, string, Guid?, string, Exception> logWarning;
+        private readonly Action<ILogger, string, Guid?, string, Exception> logError;
 
         private RequestContext requestContext;
 
@@ -45,6 +39,23 @@
         public LoggerWrapper(ILogger logger)
         {
             this.logger = logger;
+
+            this.logDebug = LoggerMessage.Define<string, Guid?, string>(
+                LogLevel.Debug,
+                new EventId(1),
+                LogMessagePattern);
+            this.logInfo = LoggerMessage.Define<string, Guid?, string>(
+                LogLevel.Information,
+                new EventId(2),
+                LogMessagePattern);
+            this.logWarning = LoggerMessage.Define<string, Guid?, string>(
+                LogLevel.Warning,
+                new EventId(3),
+                LogMessagePattern);
+            this.logError = LoggerMessage.Define<string, Guid?, string>(
+                LogLevel.Error,
+                new EventId(4),
+                LogMessagePattern);
         }
 
         /// <inheritdoc />
@@ -86,6 +97,8 @@
         /// <inheritdoc />
         public void Debug(string message, Exception exception = null)
         {
+            this.AssertContextSet();
+
             this.logDebug(
                 this.logger,
                 message,
@@ -97,6 +110,8 @@
         /// <inheritdoc />
         public void Error(string message, Exception exception = null)
         {
+            this.AssertContextSet();
+
             this.logError(
                 this.logger,
                 message,
@@ -108,6 +123,8 @@
         /// <inheritdoc />
         public void Info(string message, Exception exception = null)
         {
+            this.AssertContextSet();
+
             this.logInfo(
                 this.logger,
                 message,
@@ -119,12 +136,30 @@
         /// <inheritdoc />
         public void Warning(string message, Exception exception = null)
         {
+            this.AssertContextSet();
+
             this.logWarning(
                 this.logger,
                 message,
                 this.requestContext.InternalRequestId,
                 this.requestContext.ExternalRequestId,
                 exception);
+        }
+
+        [SuppressMessage(
+            "Microsoft.Globalization",
+            "CA1303",
+            Justification = "Library will not be localised - a resources file for this is overkill.")]
+        private void AssertContextSet()
+        {
+            if (this.requestContext == null)
+            {
+                throw new InvalidOperationException(
+                    $"No context for the logger set. You must call either " +
+                    $"{nameof(this.SetContext)} or " +
+                    $"{nameof(this.SetInternalRequestId)} prior to calling " +
+                    $"any logging methods.");
+            }
         }
     }
 }
