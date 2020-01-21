@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,12 +11,16 @@
     <PackageReference Include="Dfe.Spi.Common.Models" Version="1.0.1" />
 
     <!-- Other -->
-    <PackageReference Include="Meridian.MeaningfulToString" Version="1.0.4" PrivateAssets="All" />
+    <PackageReference Include="Meridian.MeaningfulToString" Version="1.0.4" />
 
     <!-- Development/Non-Runtime -->
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="All" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>Dfe.Spi.Common.Http.Client.xml</DocumentationFile>
+  </PropertyGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="..\stylecop.json" />
@@ -24,10 +28,6 @@
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\ca.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>Dfe.Spi.Common.Http.Client.xml</DocumentationFile>
   </PropertyGroup>
   
 </Project>
