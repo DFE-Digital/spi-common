@@ -8,9 +8,6 @@ trigger:
       - /pipelines/Dfe.Spi.Common.SharedAzure.yml
       - /common-azure/*
 
-pool:
-  vmImage: 'ubuntu-latest'
-
 steps:
   - task: NuGetToolInstaller@1
     displayName: 'Use NuGet 4.7.1'

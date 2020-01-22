@@ -8,9 +8,6 @@ trigger:
       - /pipelines/Dfe.Spi.Common.Http.Server.yml
       - /src/Dfe.Spi.Common/Dfe.Spi.Common.Http.Server/*
 
-pool:
-  vmImage: 'ubuntu-latest'
-
 steps:
   - task: NuGetToolInstaller@1
     displayName: 'Use NuGet 4.7.1'
