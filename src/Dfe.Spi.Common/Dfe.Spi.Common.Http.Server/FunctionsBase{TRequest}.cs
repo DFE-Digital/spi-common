@@ -200,7 +200,9 @@
                     $"The {nameof(JsonSchema)} for this function hasn't " +
                     $"been loaded yet...");
 
-                Type type = typeof(TRequest);
+                Type type = this.GetType();
+
+                this.loggerWrapper.Debug($"{nameof(type)} = {type}");
 
                 this.jsonSchema = await type.GetFunctionJsonSchemaAsync()
                     .ConfigureAwait(false);
