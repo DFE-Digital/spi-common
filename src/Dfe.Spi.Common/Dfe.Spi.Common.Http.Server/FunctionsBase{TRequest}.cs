@@ -41,43 +41,6 @@
         }
 
         /// <summary>
-        /// Gets an instance of <see cref="HttpErrorBodyResult" /> to return
-        /// when the user provides either an empty or malformed request.
-        /// </summary>
-        /// <returns>
-        /// An instance of <see cref="HttpErrorBodyResult" />.
-        /// </returns>
-        protected abstract HttpErrorBodyResult GetMalformedErrorResponse();
-
-        /// <summary>
-        /// Gets an instance of <see cref="HttpErrorBodyResult" /> to return
-        /// when the user provides a well-formed request, but it does not pass
-        /// the schema validation.
-        /// </summary>
-        /// <param name="message">
-        /// Details on why the schema validation failed.
-        /// </param>
-        /// <returns>
-        /// An instance of <see cref="HttpErrorBodyResult" />.
-        /// </returns>
-        protected abstract HttpErrorBodyResult GetSchemaValidationResponse(
-            string message);
-
-        /// <summary>
-        /// Executes the function's processor and handles the output, specific
-        /// to this function implementation.
-        /// </summary>
-        /// <param name="request">
-        /// An instance of type <typeparamref name="TRequest" />, well-formed
-        /// and validated.
-        /// </param>
-        /// <returns>
-        /// An instance of type <see cref="IActionResult" />.
-        /// </returns>
-        protected abstract Task<IActionResult> ProcessWellFormedRequestAsync(
-            TRequest request);
-
-        /// <summary>
         /// A base implementation of the function's entry point method. This
         /// should be over-ridden and the base implementation called from
         /// within the over-ridden implementation.
@@ -88,7 +51,7 @@
         /// <returns>
         /// An instance of type <see cref="IActionResult" />.
         /// </returns>
-        protected async virtual Task<IActionResult> RunAsync(
+        public async virtual Task<IActionResult> RunAsync(
             HttpRequest httpRequest)
         {
             IActionResult toReturn = null;
@@ -150,6 +113,43 @@
 
             return toReturn;
         }
+
+        /// <summary>
+        /// Gets an instance of <see cref="HttpErrorBodyResult" /> to return
+        /// when the user provides either an empty or malformed request.
+        /// </summary>
+        /// <returns>
+        /// An instance of <see cref="HttpErrorBodyResult" />.
+        /// </returns>
+        protected abstract HttpErrorBodyResult GetMalformedErrorResponse();
+
+        /// <summary>
+        /// Gets an instance of <see cref="HttpErrorBodyResult" /> to return
+        /// when the user provides a well-formed request, but it does not pass
+        /// the schema validation.
+        /// </summary>
+        /// <param name="message">
+        /// Details on why the schema validation failed.
+        /// </param>
+        /// <returns>
+        /// An instance of <see cref="HttpErrorBodyResult" />.
+        /// </returns>
+        protected abstract HttpErrorBodyResult GetSchemaValidationResponse(
+            string message);
+
+        /// <summary>
+        /// Executes the function's processor and handles the output, specific
+        /// to this function implementation.
+        /// </summary>
+        /// <param name="request">
+        /// An instance of type <typeparamref name="TRequest" />, well-formed
+        /// and validated.
+        /// </param>
+        /// <returns>
+        /// An instance of type <see cref="IActionResult" />.
+        /// </returns>
+        protected abstract Task<IActionResult> ProcessWellFormedRequestAsync(
+            TRequest request);
 
         private async Task<TRequest> ParseAndValidateRequestAsync(
             HttpRequest httpRequest)
