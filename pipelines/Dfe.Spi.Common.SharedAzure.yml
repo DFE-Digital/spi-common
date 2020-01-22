@@ -8,8 +8,6 @@ trigger:
       - /pipelines/Dfe.Spi.Common.SharedAzure.yml
       - /common-azure/*
 
-pr: none
-
 pool:
   vmImage: 'ubuntu-latest'
 
