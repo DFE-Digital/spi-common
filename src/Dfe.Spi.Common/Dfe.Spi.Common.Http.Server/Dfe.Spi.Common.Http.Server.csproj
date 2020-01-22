@@ -3,18 +3,20 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <!-- Dfe.Spi.* -->
     <PackageReference Include="Dfe.Spi.Common.Extensions" Version="1.0.0" />
+    <PackageReference Include="Dfe.Spi.Common.Logging" Version="1.0.9" />
     <PackageReference Include="Dfe.Spi.Common.Models" Version="1.0.1" />
 
     <!-- Microsoft -->
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.1.0" />
     
     <!-- Other -->
+    <PackageReference Include="Meridian.MeaningfulToString" Version="1.0.4" />
     <PackageReference Include="NJsonSchema" Version="10.0.28" />
     
     <!-- Development/Non-Runtime -->
