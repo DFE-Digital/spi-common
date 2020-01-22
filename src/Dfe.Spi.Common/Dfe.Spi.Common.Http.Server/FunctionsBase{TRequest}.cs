@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Threading;
     using System.Threading.Tasks;
     using Dfe.Spi.Common.Logging.Definitions;
     using Dfe.Spi.Common.Models;
@@ -48,11 +49,15 @@
         /// <param name="httpRequest">
         /// An instance of <see cref="HttpRequest" />.
         /// </param>
+        /// <param name="cancellationToken">
+        /// An instance of <see cref="CancellationToken" />.
+        /// </param>
         /// <returns>
         /// An instance of type <see cref="IActionResult" />.
         /// </returns>
-        public async virtual Task<IActionResult> RunAsync(
-            HttpRequest httpRequest)
+        public async Task<IActionResult> ValidateAndRunAsync(
+            HttpRequest httpRequest,
+            CancellationToken cancellationToken)
         {
             IActionResult toReturn = null;
 
@@ -96,7 +101,9 @@
             {
                 // The JSON is valid and not null, but at this point, it's
                 // unknown if its valid according to the *schema*.
-                toReturn = await this.ProcessWellFormedRequestAsync(request)
+                toReturn = await this.ProcessWellFormedRequestAsync(
+                    request,
+                    cancellationToken)
                     .ConfigureAwait(false);
             }
 
@@ -145,11 +152,15 @@
         /// An instance of type <typeparamref name="TRequest" />, well-formed
         /// and validated.
         /// </param>
+        /// <param name="cancellationToken">
+        /// An instance of <see cref="CancellationToken" />.
+        /// </param>
         /// <returns>
         /// An instance of type <see cref="IActionResult" />.
         /// </returns>
         protected abstract Task<IActionResult> ProcessWellFormedRequestAsync(
-            TRequest request);
+            TRequest request,
+            CancellationToken cancellationToken);
 
         private async Task<TRequest> ParseAndValidateRequestAsync(
             HttpRequest httpRequest)
