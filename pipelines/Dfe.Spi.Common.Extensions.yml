@@ -9,8 +9,6 @@ trigger:
       - /pipelines/Dfe.Spi.Common.Extensions.yml
       - /src/Dfe.Spi.Common/Dfe.Spi.Common.Extensions/*
 
-pr: none
-
 pool:
   vmImage: 'ubuntu-latest'
 

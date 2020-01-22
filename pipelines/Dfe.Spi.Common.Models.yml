@@ -8,8 +8,6 @@ trigger:
       - /pipelines/Dfe.Spi.Common.Models.yml
       - /src/Dfe.Spi.Common/Dfe.Spi.Common.Models/*
 
-pr: none
-
 pool:
   vmImage: 'ubuntu-latest'
 
