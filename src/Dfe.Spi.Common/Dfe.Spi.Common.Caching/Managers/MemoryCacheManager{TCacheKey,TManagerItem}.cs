@@ -36,7 +36,7 @@
         /// An instance of type <see cref="ILoggerWrapper" />.
         /// </param>
         /// <param name="initialiseCacheItem">
-        /// An intsance of type <see cref="InitialiseCacheItem" />.
+        /// An instance of <see cref="InitialiseCacheItem" />.
         /// </param>
         public MemoryCacheManager(
             IMemoryCacheProvider<TCacheKey, TManagerItem> memoryCacheProvider,
