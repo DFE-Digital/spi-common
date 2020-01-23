@@ -22,7 +22,7 @@
         private readonly IMemoryCacheProvider<TCacheKey, TManagerItem> memoryCacheProvider;
         private readonly ILoggerWrapper loggerWrapper;
 
-        private readonly InitialiseCacheItem initialiseCacheItem;
+        private readonly InitialiseCacheItemAsync initialiseCacheItemAsync;
 
         /// <summary>
         /// Initialises a new instance of the
@@ -35,17 +35,17 @@
         /// <param name="loggerWrapper">
         /// An instance of type <see cref="ILoggerWrapper" />.
         /// </param>
-        /// <param name="initialiseCacheItem">
-        /// An instance of <see cref="InitialiseCacheItem" />.
+        /// <param name="initialiseCacheItemAsync">
+        /// An instance of <see cref="InitialiseCacheItemAsync" />.
         /// </param>
         public MemoryCacheManager(
             IMemoryCacheProvider<TCacheKey, TManagerItem> memoryCacheProvider,
             ILoggerWrapper loggerWrapper,
-            InitialiseCacheItem initialiseCacheItem)
+            InitialiseCacheItemAsync initialiseCacheItemAsync)
         {
             this.memoryCacheProvider = memoryCacheProvider;
             this.loggerWrapper = loggerWrapper;
-            this.initialiseCacheItem = initialiseCacheItem;
+            this.initialiseCacheItemAsync = initialiseCacheItemAsync;
         }
 
         /// <summary>
@@ -54,11 +54,16 @@
         /// <param name="key">
         /// The key.
         /// </param>
+        /// <param name="cancellationToken">
+        /// An instance of <see cref="CancellationToken" />.
+        /// </param>
         /// <returns>
         /// An instance of type
         /// <typeparamref name="TManagerItem" />.
         /// </returns>
-        public delegate Task<TManagerItem> InitialiseCacheItem(TCacheKey key);
+        public delegate Task<TManagerItem> InitialiseCacheItemAsync(
+            TCacheKey key,
+            CancellationToken cancellationToken);
 
         /// <inheritdoc />
         public async Task<TManagerItem> GetAsync(
@@ -82,7 +87,9 @@
                     $"\"{key}\". Attempting to initialise a value for this " +
                     $"key...");
 
-                toReturn = await this.initialiseCacheItem(key)
+                toReturn = await this.initialiseCacheItemAsync(
+                    key,
+                    cancellationToken)
                     .ConfigureAwait(false);
 
                 if (toReturn != null)
