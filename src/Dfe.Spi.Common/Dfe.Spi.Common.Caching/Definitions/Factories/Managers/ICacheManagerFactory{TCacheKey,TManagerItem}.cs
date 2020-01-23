@@ -1,5 +1,6 @@
 ﻿namespace Dfe.Spi.Common.Caching.Definitions.Factories.Managers
 {
+    using System.Threading;
     using System.Threading.Tasks;
     using Dfe.Spi.Common.Caching.Definitions.Managers;
 
@@ -25,9 +26,14 @@
         /// <param name="cacheKey">
         /// The key.
         /// </param>
+        /// <param name="cancellationToken">
+        /// An instance of <see cref="CancellationToken" />.
+        /// </param>
         /// <returns>
         /// An instance of type <typeparamref name="TCacheKey" />.
         /// </returns>
-        Task<TManagerItem> InitialiseCacheItemAsync(TCacheKey cacheKey);
+        Task<TManagerItem> InitialiseCacheItemAsync(
+            TCacheKey cacheKey,
+            CancellationToken cancellationToken);
     }
 }
