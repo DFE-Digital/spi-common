@@ -2,35 +2,26 @@
 {
     using System.Threading;
     using System.Threading.Tasks;
-    using Dfe.Spi.Common.Caching.Definitions.Caches;
+    using Dfe.Spi.Common.Caching.Definitions;
     using Dfe.Spi.Common.Caching.Definitions.Managers;
     using Dfe.Spi.Common.Logging.Definitions;
 
     /// <summary>
-    /// Implements <see cref="IMemoryCacheManager{TCacheKey, TManagerItem}" />.
+    /// Implements <see cref="ICacheManager" />. An in-memory implementation of
+    /// <see cref="ICacheManager" />.
     /// </summary>
-    /// <typeparam name="TCacheKey">
-    /// The type of key used in the underlying storage.
-    /// </typeparam>
-    /// <typeparam name="TManagerItem">
-    /// The type of item being managed.
-    /// </typeparam>
-    public class MemoryCacheManager<TCacheKey, TManagerItem>
-        : IMemoryCacheManager<TCacheKey, TManagerItem>
-        where TManagerItem : class
+    public class CacheManager : ICacheManager
     {
-        private readonly IMemoryCacheProvider<TCacheKey, TManagerItem> memoryCacheProvider;
+        private readonly ICacheProvider cacheProvider;
         private readonly ILoggerWrapper loggerWrapper;
-
         private readonly InitialiseCacheItemAsync initialiseCacheItemAsync;
 
         /// <summary>
-        /// Initialises a new instance of the
-        /// <see cref="MemoryCacheManager{TCacheKey, TCacheValue}" /> class.
+        /// Initialises a new instance of the <see cref="CacheManager" />
+        /// class.
         /// </summary>
-        /// <param name="memoryCacheProvider">
-        /// An instance of type
-        /// <see cref="IMemoryCacheProvider{TCacheKey, TManagerItem}" />.
+        /// <param name="cacheProvider">
+        /// An instance of type <see cref="ICacheProvider" />.
         /// </param>
         /// <param name="loggerWrapper">
         /// An instance of type <see cref="ILoggerWrapper" />.
@@ -38,12 +29,12 @@
         /// <param name="initialiseCacheItemAsync">
         /// An instance of <see cref="InitialiseCacheItemAsync" />.
         /// </param>
-        public MemoryCacheManager(
-            IMemoryCacheProvider<TCacheKey, TManagerItem> memoryCacheProvider,
+        public CacheManager(
+            ICacheProvider cacheProvider,
             ILoggerWrapper loggerWrapper,
             InitialiseCacheItemAsync initialiseCacheItemAsync)
         {
-            this.memoryCacheProvider = memoryCacheProvider;
+            this.cacheProvider = cacheProvider;
             this.loggerWrapper = loggerWrapper;
             this.initialiseCacheItemAsync = initialiseCacheItemAsync;
         }
@@ -58,32 +49,29 @@
         /// An instance of <see cref="CancellationToken" />.
         /// </param>
         /// <returns>
-        /// An instance of type
-        /// <typeparamref name="TManagerItem" />.
+        /// The item to cache, as an <see cref="object" />.
         /// </returns>
-        public delegate Task<TManagerItem> InitialiseCacheItemAsync(
-            TCacheKey key,
+        public delegate Task<object> InitialiseCacheItemAsync(
+            string key,
             CancellationToken cancellationToken);
 
         /// <inheritdoc />
-        public async Task<TManagerItem> GetAsync(
-            TCacheKey key,
+        public async Task<object> GetAsync(
+            string key,
             CancellationToken cancellationToken)
         {
-            TManagerItem toReturn = null;
-
-            string typeName = typeof(TManagerItem).Name;
+            object toReturn = null;
 
             this.loggerWrapper.Debug(
-                $"Checking the cache for an instance of {typeName} for " +
-                $"{nameof(key)} \"{key}\"...");
+                $"Checking the cache for an enty with {nameof(key)} " +
+                $"\"{key}\"...");
 
-            toReturn = this.memoryCacheProvider.GetCacheItem(key);
+            toReturn = this.cacheProvider.GetCacheItem(key);
 
             if (toReturn == null)
             {
                 this.loggerWrapper.Info(
-                    $"No {typeName} found in cache with {nameof(key)} " +
+                    $"No entry found in cache with {nameof(key)} " +
                     $"\"{key}\". Attempting to initialise a value for this " +
                     $"key...");
 
@@ -98,7 +86,7 @@
                         $"Storing {toReturn} in cache with {nameof(key)} " +
                         $"\"{key}\"...");
 
-                    this.memoryCacheProvider.AddCacheItem(key, toReturn);
+                    this.cacheProvider.AddCacheItem(key, toReturn);
 
                     this.loggerWrapper.Info(
                         $"{toReturn} stored in cache with {nameof(key)} " +
@@ -114,8 +102,8 @@
             else
             {
                 this.loggerWrapper.Debug(
-                    $"{typeName} found in the cache for {nameof(key)} " +
-                    $"\"{key}\": {toReturn}.");
+                    $"Entry found in the cache for {nameof(key)} \"{key}\": " +
+                    $"{toReturn}.");
             }
 
             return toReturn;

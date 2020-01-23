@@ -6,14 +6,7 @@
     /// <summary>
     /// Describes the operations of the cache manager.
     /// </summary>
-    /// <typeparam name="TCacheKey">
-    /// The type of key used in the underlying storage.
-    /// </typeparam>
-    /// <typeparam name="TManagerItem">
-    /// The type of item being managed.
-    /// </typeparam>
-    public interface ICacheManager<TCacheKey, TManagerItem>
-        where TManagerItem : class
+    public interface ICacheManager
     {
         /// <summary>
         /// Gets an item from the manager.
@@ -22,14 +15,13 @@
         /// The key.
         /// </param>
         /// <param name="cancellationToken">
-        /// An insttance of <see cref="CancellationToken" />.
+        /// An instance of <see cref="CancellationToken" />.
         /// </param>
         /// <returns>
-        /// An instance of type
-        /// <typeparamref name="TManagerItem" />.
+        /// The cached item, as an <see cref="object" />.
         /// </returns>
-        Task<TManagerItem> GetAsync(
-            TCacheKey key,
+        Task<object> GetAsync(
+            string key,
             CancellationToken cancellationToken);
     }
 }
