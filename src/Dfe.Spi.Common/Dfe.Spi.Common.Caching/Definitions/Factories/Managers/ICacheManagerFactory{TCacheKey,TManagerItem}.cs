@@ -1,4 +1,4 @@
-﻿namespace Dfe.Spi.Common.Caching.Definitions.Factories
+﻿namespace Dfe.Spi.Common.Caching.Definitions.Factories.Managers
 {
     using System.Threading.Tasks;
     using Dfe.Spi.Common.Caching.Definitions.Managers;
