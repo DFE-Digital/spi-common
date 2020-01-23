@@ -1,4 +1,4 @@
-﻿namespace Dfe.Spi.Common.Caching.Managers
+﻿namespace Dfe.Spi.Common.Caching
 {
     using System.Threading;
     using System.Threading.Tasks;

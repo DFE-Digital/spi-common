@@ -1,4 +1,4 @@
-﻿namespace Dfe.Spi.Common.Caching.Caches
+﻿namespace Dfe.Spi.Common.Caching
 {
     using System.Collections.Generic;
     using Dfe.Spi.Common.Caching.Definitions;
