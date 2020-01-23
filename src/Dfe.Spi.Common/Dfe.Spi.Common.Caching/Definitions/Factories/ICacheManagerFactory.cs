@@ -10,6 +10,14 @@
     public interface ICacheManagerFactory
     {
         /// <summary>
+        /// Creates an instance of type <see cref="ICacheManager" />.
+        /// </summary>
+        /// <returns>
+        /// An instance of type <see cref="ICacheManager" />.
+        /// </returns>
+        ICacheManager Create();
+
+        /// <summary>
         /// The method, injected into the created <see cref="ICacheManager" />
         /// that is invoked upon initialising a cache item that cannot be found
         /// in the cache.
