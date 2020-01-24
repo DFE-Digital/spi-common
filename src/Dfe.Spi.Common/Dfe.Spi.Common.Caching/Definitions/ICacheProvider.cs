@@ -1,5 +1,8 @@
 ﻿namespace Dfe.Spi.Common.Caching.Definitions
 {
+    using System.Threading;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Describes the operations of the cache provider.
     /// </summary>
@@ -14,7 +17,16 @@
         /// <param name="cacheItem">
         /// The <see cref="object" /> being cached.
         /// </param>
-        void AddCacheItem(string key, object cacheItem);
+        /// <param name="cancellationToken">
+        /// An instance of <see cref="CancellationToken" />.
+        /// </param>
+        /// <returns>
+        /// A <see cref="Task"/> representing the asynchronous operation.
+        /// </returns>
+        Task AddCacheItemAsync(
+            string key,
+            object cacheItem,
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets an item from the cache, unless not found, in which case null.
@@ -22,9 +34,14 @@
         /// <param name="key">
         /// The key.
         /// </param>
+        /// <param name="cancellationToken">
+        /// An instance of <see cref="CancellationToken" />.
+        /// </param>
         /// <returns>
         /// The cached <see cref="object" />.
         /// </returns>
-        object GetCacheItem(string key);
+        Task<object> GetCacheItemAsync(
+            string key,
+            CancellationToken cancellationToken);
     }
 }

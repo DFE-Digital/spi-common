@@ -66,7 +66,10 @@
                 $"Checking the cache for an enty with {nameof(key)} " +
                 $"\"{key}\"...");
 
-            toReturn = this.cacheProvider.GetCacheItem(key);
+            toReturn = await this.cacheProvider.GetCacheItemAsync(
+                key,
+                cancellationToken)
+                .ConfigureAwait(false);
 
             if (toReturn == null)
             {
@@ -86,7 +89,11 @@
                         $"Storing {toReturn} in cache with {nameof(key)} " +
                         $"\"{key}\"...");
 
-                    this.cacheProvider.AddCacheItem(key, toReturn);
+                    await this.cacheProvider.AddCacheItemAsync(
+                        key,
+                        toReturn,
+                        cancellationToken)
+                        .ConfigureAwait(false);
 
                     this.loggerWrapper.Info(
                         $"{toReturn} stored in cache with {nameof(key)} " +

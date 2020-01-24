@@ -1,6 +1,8 @@
 ﻿namespace Dfe.Spi.Common.Caching
 {
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Dfe.Spi.Common.Caching.Definitions;
 
     /// <summary>
@@ -21,7 +23,27 @@
         }
 
         /// <inheritdoc />
-        public void AddCacheItem(string key, object cacheItem)
+        public Task AddCacheItemAsync(
+            string key,
+            object cacheItem,
+            CancellationToken cancellationToken)
+        {
+            this.AddCacheItem(key, cacheItem);
+
+            return Task.CompletedTask;
+        }
+
+        /// <inheritdoc />
+        public Task<object> GetCacheItemAsync(
+            string key,
+            CancellationToken cancellationToken)
+        {
+            object toReturn = this.GetCacheItem(key);
+
+            return Task.FromResult(toReturn);
+        }
+
+        private void AddCacheItem(string key, object cacheItem)
         {
             // We should never need to overwrite what's in the cache.
             if (!this.cache.ContainsKey(key))
@@ -31,8 +53,7 @@
             }
         }
 
-        /// <inheritdoc />
-        public object GetCacheItem(string key)
+        private object GetCacheItem(string key)
         {
             object toReturn = null;
 
