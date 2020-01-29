@@ -10,9 +10,9 @@ trigger:
 
 steps:
   - task: NuGetToolInstaller@1
-    displayName: 'Use NuGet 4.7.1'
+    displayName: 'Use NuGet 4.9.1'
     inputs:
-      versionSpec: '4.7.1'
+      versionSpec: '4.9.1'
 
   - task: CopyFiles@2
     displayName: 'Copy ARM template'
