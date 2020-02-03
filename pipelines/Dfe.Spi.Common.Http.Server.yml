@@ -34,7 +34,7 @@ steps:
     inputs:
       command: test
       projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Http.Server.UnitTests/Dfe.Spi.Common.Http.Server.UnitTests.csproj'
-      arguments: '--configuration $(BuildConfiguration) --no-restore'
+      arguments: '--configuration $(BuildConfiguration) --no-restore --no-build'
       
   - task: DotNetCoreCLI@2
     displayName: 'Pack Common Http Server Library'
