@@ -29,12 +29,13 @@ steps:
       projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Models/Dfe.Spi.Common.Models.csproj'
       arguments: '--configuration Release --output $(Build.BinariesDirectory) --no-restore'
       
-  - task: CopyFiles@2
-    displayName: 'Copy NuGet Package to Artifacts Staging'
+  - task: DotNetCoreCLI@2
+    displayName: 'Pack Common Models Library'
     inputs:
-      SourceFolder: '$(Build.BinariesDirectory)'
-      Contents: 'Dfe.Spi.Common.Models.*.nupkg'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      command: 'pack'
+      packagesToPack: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Models/Dfe.Spi.Common.Models.csproj'
+      nobuild: true
+      versioningScheme: 'off'
       
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifacts'

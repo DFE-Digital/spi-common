@@ -29,12 +29,13 @@ steps:
       projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Caching/Dfe.Spi.Common.Caching.csproj'
       arguments: '--configuration Release --output $(Build.BinariesDirectory) --no-restore'
       
-  - task: CopyFiles@2
-    displayName: 'Copy NuGet Package to Artifacts Staging'
+  - task: DotNetCoreCLI@2
+    displayName: 'Pack Common Caching Library'
     inputs:
-      SourceFolder: '$(Build.BinariesDirectory)'
-      Contents: 'Dfe.Spi.Common.Caching.*.nupkg'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      command: 'pack'
+      packagesToPack: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Caching/Dfe.Spi.Common.Caching.csproj'
+      nobuild: true
+      versioningScheme: 'off'
       
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifacts'

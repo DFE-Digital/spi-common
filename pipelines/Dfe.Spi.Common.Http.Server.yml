@@ -23,7 +23,7 @@ steps:
       vstsFeed: 'c5095ddb-6433-4990-a3a5-1df8a78b1302/$(FeedSecret)'
 
   - task: DotNetCoreCLI@2
-    displayName: 'Build Common Unit Testing Library'
+    displayName: 'Build Common Http Server Library'
     inputs:
       command: 'build'
       projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Http.Server/Dfe.Spi.Common.Http.Server.csproj'
@@ -36,12 +36,13 @@ steps:
       projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Http.Server.UnitTests/Dfe.Spi.Common.Http.Server.UnitTests.csproj'
       arguments: '--configuration $(BuildConfiguration) --no-restore'
       
-  - task: CopyFiles@2
-    displayName: 'Copy NuGet Package to Artifacts Staging'
+  - task: DotNetCoreCLI@2
+    displayName: 'Pack Common Http Server Library'
     inputs:
-      SourceFolder: '$(Build.BinariesDirectory)'
-      Contents: 'Dfe.Spi.Common.Http.Server.*.nupkg'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      command: 'pack'
+      packagesToPack: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Http.Server/Dfe.Spi.Common.Http.Server.csproj'
+      nobuild: true
+      versioningScheme: 'off'
       
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifacts'
