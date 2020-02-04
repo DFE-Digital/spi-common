@@ -8,6 +8,9 @@ trigger:
       - /pipelines/Dfe.Spi.Common.Models.yml
       - /src/Dfe.Spi.Common/Dfe.Spi.Common.Models/*
 
+variables:
+    BuildConfiguration: Release
+
 steps:
   - task: NuGetToolInstaller@1
     displayName: 'Use NuGet 4.9.1'
@@ -27,7 +30,7 @@ steps:
     inputs:
       command: 'build'
       projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Models/Dfe.Spi.Common.Models.csproj'
-      arguments: '--configuration Release --no-restore'
+      arguments: '--configuration $(BuildConfiguration) --no-restore'
       
   - task: DotNetCoreCLI@2
     displayName: 'Pack Common Models Library'
