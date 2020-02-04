@@ -5,7 +5,7 @@
     /// <summary>
     /// Represents exeuction context across the various SPI APIs.
     /// </summary>
-    public class SpiExecutionContext
+    public class SpiExecutionContext : ModelsBase
     {
         /// <summary>
         /// Gets or sets an internal request id.
