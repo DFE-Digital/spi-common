@@ -1,8 +1,7 @@
-﻿namespace Dfe.Spi.Common.Http.Server.Definitions
+﻿namespace Dfe.Spi.Common.Context.Definitions
 {
     using System;
-    using Dfe.Spi.Common.Http.Server.Models;
-    using Microsoft.AspNetCore.Http;
+    using Dfe.Spi.Common.Context.Models;
 
     /// <summary>
     /// Describes the operations of the
@@ -17,15 +16,6 @@
         {
             get;
         }
-
-        /// <summary>
-        /// Sets the <see cref="Models.SpiExecutionContext" />, based on
-        /// information pulled from the <see cref="HttpRequest" />.
-        /// </summary>
-        /// <param name="headerDictionary">
-        /// An instance of type <see cref="IHeaderDictionary" />.
-        /// </param>
-        void SetContext(IHeaderDictionary headerDictionary);
 
         /// <summary>
         /// Sets the internal request id (i.e. custom dimension information)
