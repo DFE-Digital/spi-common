@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.10</Version>
+    <Version>1.0.11</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <!-- Dfe.Spi.* -->
-    <PackageReference Include="Dfe.Spi.Common.Context" Version="1.0.0" />
+    <PackageReference Include="Dfe.Spi.Common.Context" Version="1.0.1" />
     <PackageReference Include="Dfe.Spi.Common.Extensions" Version="1.0.0" />
     <PackageReference Include="Dfe.Spi.Common.Logging" Version="1.1.0" />
     <PackageReference Include="Dfe.Spi.Common.Models" Version="1.0.3" />
