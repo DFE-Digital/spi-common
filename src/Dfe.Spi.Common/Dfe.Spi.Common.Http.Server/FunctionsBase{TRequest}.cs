@@ -5,6 +5,7 @@
     using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
+    using Dfe.Spi.Common.Http.Server.Definitions;
     using Dfe.Spi.Common.Logging.Definitions;
     using Dfe.Spi.Common.Models;
     using Microsoft.AspNetCore.Http;
@@ -24,6 +25,7 @@
     public abstract class FunctionsBase<TRequest>
         where TRequest : RequestResponseBase
     {
+        private readonly IHttpSpiExecutionContextManager httpSpiExecutionContextManager;
         private readonly ILoggerWrapper loggerWrapper;
 
         private JsonSchema jsonSchema;
@@ -32,12 +34,17 @@
         /// Initialises a new instance of the
         /// <see cref="FunctionsBase{TRequest}" /> class.
         /// </summary>
+        /// <param name="httpSpiExecutionContextManager">
+        /// An instance of type <see cref="IHttpSpiExecutionContextManager" />.
+        /// </param>
         /// <param name="loggerWrapper">
         /// An instance of type <see cref="ILoggerWrapper" />.
         /// </param>
         protected FunctionsBase(
+            IHttpSpiExecutionContextManager httpSpiExecutionContextManager,
             ILoggerWrapper loggerWrapper)
         {
+            this.httpSpiExecutionContextManager = httpSpiExecutionContextManager;
             this.loggerWrapper = loggerWrapper;
         }
 
@@ -66,7 +73,8 @@
                 throw new ArgumentNullException(nameof(httpRequest));
             }
 
-            this.loggerWrapper.SetContext(httpRequest.Headers);
+            this.httpSpiExecutionContextManager.SetContext(
+                httpRequest.Headers);
 
             TRequest request = null;
             try
