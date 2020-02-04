@@ -2,20 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.8</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Dfe.Spi.* -->
-    <PackageReference Include="Dfe.Spi.Common.Logging" Version="1.1.0" />
-
     <!-- Development/Non-Runtime -->
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118" PrivateAssets="All" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.8" PrivateAssets="All" />
   </ItemGroup>
 
   <PropertyGroup>
-    <DocumentationFile>Dfe.Spi.Common.Caching.xml</DocumentationFile>
+    <DocumentationFile>Dfe.Spi.Common.Context.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

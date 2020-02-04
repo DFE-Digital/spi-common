@@ -5,8 +5,8 @@ trigger:
       - "*"
   paths:
     include:
-      - /pipelines/Dfe.Spi.Common.Models.yml
-      - /src/Dfe.Spi.Common/Dfe.Spi.Common.Models/*
+      - /pipelines/Dfe.Spi.Common.Context.yml
+      - /src/Dfe.Spi.Common/Dfe.Spi.Common.Context/*
 
 variables:
     BuildConfiguration: Release
@@ -26,20 +26,20 @@ steps:
       vstsFeed: 'c5095ddb-6433-4990-a3a5-1df8a78b1302/$(FeedSecret)'
 
   - task: DotNetCoreCLI@2
-    displayName: 'Build Common Models Library'
+    displayName: 'Build Library'
     inputs:
       command: 'build'
-      projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Models/Dfe.Spi.Common.Models.csproj'
+      projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Context/Dfe.Spi.Common.Context.csproj'
       arguments: '--configuration $(BuildConfiguration) --no-restore'
-      
+
   - task: DotNetCoreCLI@2
-    displayName: 'Pack Common Models Library'
+    displayName: 'Pack Library'
     inputs:
       command: 'pack'
-      packagesToPack: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Models/Dfe.Spi.Common.Models.csproj'
+      packagesToPack: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Context/Dfe.Spi.Common.Context.csproj'
       nobuild: true
       versioningScheme: 'off'
-      
+
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifacts'
     inputs:

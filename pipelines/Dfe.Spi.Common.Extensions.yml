@@ -8,6 +8,9 @@ trigger:
       - /pipelines/Dfe.Spi.Common.Extensions.yml
       - /src/Dfe.Spi.Common/Dfe.Spi.Common.Extensions/*
 
+variables:
+    BuildConfiguration: Release
+
 steps:
   - task: NuGetToolInstaller@1
     displayName: 'Use NuGet 4.9.1'
@@ -27,14 +30,15 @@ steps:
     inputs:
       command: 'build'
       projects: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Extensions/Dfe.Spi.Common.Extensions.csproj'
-      arguments: '--configuration Release --output $(Build.BinariesDirectory) --no-restore'
+      arguments: '--configuration $(BuildConfiguration) --no-restore'
       
-  - task: CopyFiles@2
-    displayName: 'Copy NuGet Package to Artifacts Staging'
+  - task: DotNetCoreCLI@2
+    displayName: 'Pack Common Extensions Library'
     inputs:
-      SourceFolder: '$(Build.BinariesDirectory)'
-      Contents: 'Dfe.Spi.Common.Extensions.*.nupkg'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      command: 'pack'
+      packagesToPack: 'src/Dfe.Spi.Common/Dfe.Spi.Common.Extensions/Dfe.Spi.Common.Extensions.csproj'
+      nobuild: true
+      versioningScheme: 'off'
       
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifacts'

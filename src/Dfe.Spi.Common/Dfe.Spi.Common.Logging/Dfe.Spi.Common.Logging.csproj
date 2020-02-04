@@ -2,13 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.9</Version>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Dfe.Spi.* -->
+    <PackageReference Include="Dfe.Spi.Common.Context" Version="1.0.0" />
+    
     <!-- Microsoft -->
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
 
     <!-- Development/Non-Runtime -->

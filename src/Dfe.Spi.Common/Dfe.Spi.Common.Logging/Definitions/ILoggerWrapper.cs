@@ -2,31 +2,12 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using Microsoft.AspNetCore.Http;
 
     /// <summary>
     /// Describes the operations of the logger wrapper.
     /// </summary>
     public interface ILoggerWrapper
     {
-        /// <summary>
-        /// Sets the context (i.e. custom dimension information) against the
-        /// instance.
-        /// </summary>
-        /// <param name="headerDictionary">
-        /// An instance of type <see cref="IHeaderDictionary" />.
-        /// </param>
-        void SetContext(IHeaderDictionary headerDictionary);
-
-        /// <summary>
-        /// Sets the internal request id (i.e. custom dimension information) against the
-        /// instance.
-        /// </summary>
-        /// <param name="internalRequestId">
-        /// Guid to use as internal request id.
-        /// </param>
-        void SetInternalRequestId(Guid internalRequestId);
-
         /// <summary>
         /// Logs a <paramref name="message" /> with debug-level importance.
         /// </summary>
