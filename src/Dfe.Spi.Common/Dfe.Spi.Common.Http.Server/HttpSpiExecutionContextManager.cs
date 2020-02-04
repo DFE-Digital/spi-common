@@ -2,34 +2,31 @@
 {
     using System;
     using System.Linq;
+    using Dfe.Spi.Common.Context;
+    using Dfe.Spi.Common.Context.Models;
     using Dfe.Spi.Common.Http.Server.Definitions;
-    using Dfe.Spi.Common.Http.Server.Models;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Net.Http.Headers;
 
     /// <summary>
-    /// Implements <see cref="ISpiExecutionContextManager" />.
+    /// Implements <see cref="IHttpSpiExecutionContextManager" />.
     /// </summary>
-    public class SpiExecutionContextManager : ISpiExecutionContextManager
+    public class HttpSpiExecutionContextManager
+        : SpiExecutionContextManager, IHttpSpiExecutionContextManager
     {
         private const string BearerAuthorizationPrefix = "Bearer ";
         private const string InternalRequestIdHeaderName = "X-Internal-Request-Id";
         private const string ExternalRequestIdHeaderName = "X-External-Request-Id";
 
-        /// <summary>
-        /// Initialises a new instance of the
-        /// <see cref="SpiExecutionContextManager" /> class.
-        /// </summary>
-        public SpiExecutionContextManager()
-        {
-            // Does nothing, for now.
-        }
+        private SpiExecutionContext spiExecutionContext;
 
         /// <inheritdoc />
-        public SpiExecutionContext SpiExecutionContext
+        public override SpiExecutionContext SpiExecutionContext
         {
-            get;
-            private set;
+            get
+            {
+                return this.spiExecutionContext;
+            }
         }
 
         /// <inheritdoc />
@@ -77,21 +74,7 @@
                 IdentityToken = identityToken,
             };
 
-            this.SpiExecutionContext = spiExecutionContext;
-        }
-
-        /// <inheritdoc />
-        public void SetInternalRequestId(Guid internalRequestId)
-        {
-            if (this.SpiExecutionContext == null)
-            {
-                throw new InvalidOperationException(
-                    $"No context initialised. Make sure to call " +
-                    $"{nameof(this.SetContext)} *prior* to calling this " +
-                    $"method.");
-            }
-
-            this.SpiExecutionContext.InternalRequestId = internalRequestId;
+            this.spiExecutionContext = spiExecutionContext;
         }
     }
 }

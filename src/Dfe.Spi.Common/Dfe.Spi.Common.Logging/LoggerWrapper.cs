@@ -2,10 +2,9 @@
 {
     using System;
     using System.Diagnostics.CodeAnalysis;
-    using System.Linq;
+    using Dfe.Spi.Common.Context.Definitions;
+    using Dfe.Spi.Common.Context.Models;
     using Dfe.Spi.Common.Logging.Definitions;
-    using Dfe.Spi.Common.Logging.Models;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
 
     /// <summary>
@@ -13,21 +12,18 @@
     /// </summary>
     public class LoggerWrapper : ILoggerWrapper
     {
-        private const string InternalRequestIdHeaderName = "X-Internal-Request-Id";
-        private const string ExternalRequestIdHeaderName = "X-External-Request-Id";
         private static readonly string LogMessagePattern =
             "{message} " +
-            $"({nameof(RequestContext.InternalRequestId)}: {{{nameof(RequestContext.InternalRequestId)}}}, " +
-            $"{nameof(RequestContext.ExternalRequestId)}: {{{nameof(RequestContext.ExternalRequestId)}}})";
+            $"({nameof(SpiExecutionContext.InternalRequestId)}: {{{nameof(SpiExecutionContext.InternalRequestId)}}}, " +
+            $"{nameof(SpiExecutionContext.ExternalRequestId)}: {{{nameof(SpiExecutionContext.ExternalRequestId)}}})";
 
         private readonly ILogger logger;
+        private readonly ISpiExecutionContextManager spiExecutionContextManager;
 
         private readonly Action<ILogger, string, Guid?, string, Exception> logDebug;
         private readonly Action<ILogger, string, Guid?, string, Exception> logInfo;
         private readonly Action<ILogger, string, Guid?, string, Exception> logWarning;
         private readonly Action<ILogger, string, Guid?, string, Exception> logError;
-
-        private RequestContext requestContext;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="LoggerWrapper"/> class.
@@ -36,9 +32,15 @@
         /// <param name="logger">
         /// An instance of type <see cref="ILogger" />.
         /// </param>
-        public LoggerWrapper(ILogger logger)
+        /// <param name="spiExecutionContextManager">
+        /// An instance of type <see cref="ISpiExecutionContextManager" />.
+        /// </param>
+        public LoggerWrapper(
+            ILogger logger,
+            ISpiExecutionContextManager spiExecutionContextManager)
         {
             this.logger = logger;
+            this.spiExecutionContextManager = spiExecutionContextManager;
 
             this.logDebug = LoggerMessage.Define<string, Guid?, string>(
                 LogLevel.Debug,
@@ -59,42 +61,6 @@
         }
 
         /// <inheritdoc />
-        public void SetContext(IHeaderDictionary headerDictionary)
-        {
-            if (headerDictionary == null)
-            {
-                throw new ArgumentNullException(nameof(headerDictionary));
-            }
-
-            var internalRequestId = headerDictionary.ContainsKey(InternalRequestIdHeaderName)
-                ? (Guid?)Guid.Parse(headerDictionary[InternalRequestIdHeaderName].First())
-                : null;
-
-            var externalRequestId = headerDictionary.ContainsKey(ExternalRequestIdHeaderName)
-                ? headerDictionary[ExternalRequestIdHeaderName].First()
-                : null;
-
-            RequestContext requestContext = new RequestContext()
-            {
-                InternalRequestId = internalRequestId,
-                ExternalRequestId = externalRequestId,
-            };
-
-            this.requestContext = requestContext;
-        }
-
-        /// <inheritdoc />
-        public void SetInternalRequestId(Guid internalRequestId)
-        {
-            if (this.requestContext == null)
-            {
-                this.requestContext = new RequestContext();
-            }
-
-            this.requestContext.InternalRequestId = internalRequestId;
-        }
-
-        /// <inheritdoc />
         public void Debug(string message, Exception exception = null)
         {
             this.AssertContextSet();
@@ -102,8 +68,8 @@
             this.logDebug(
                 this.logger,
                 message,
-                this.requestContext.InternalRequestId,
-                this.requestContext.ExternalRequestId,
+                this.spiExecutionContextManager.SpiExecutionContext.InternalRequestId,
+                this.spiExecutionContextManager.SpiExecutionContext.ExternalRequestId,
                 exception);
         }
 
@@ -115,8 +81,8 @@
             this.logError(
                 this.logger,
                 message,
-                this.requestContext.InternalRequestId,
-                this.requestContext.ExternalRequestId,
+                this.spiExecutionContextManager.SpiExecutionContext.InternalRequestId,
+                this.spiExecutionContextManager.SpiExecutionContext.ExternalRequestId,
                 exception);
         }
 
@@ -128,8 +94,8 @@
             this.logInfo(
                 this.logger,
                 message,
-                this.requestContext.InternalRequestId,
-                this.requestContext.ExternalRequestId,
+                this.spiExecutionContextManager.SpiExecutionContext.InternalRequestId,
+                this.spiExecutionContextManager.SpiExecutionContext.ExternalRequestId,
                 exception);
         }
 
@@ -141,8 +107,8 @@
             this.logWarning(
                 this.logger,
                 message,
-                this.requestContext.InternalRequestId,
-                this.requestContext.ExternalRequestId,
+                this.spiExecutionContextManager.SpiExecutionContext.InternalRequestId,
+                this.spiExecutionContextManager.SpiExecutionContext.ExternalRequestId,
                 exception);
         }
 
@@ -152,13 +118,15 @@
             Justification = "Library will not be localised - a resources file for this is overkill.")]
         private void AssertContextSet()
         {
-            if (this.requestContext == null)
+            if (this.spiExecutionContextManager == null || this.spiExecutionContextManager.SpiExecutionContext == null)
             {
                 throw new InvalidOperationException(
-                    $"No context for the logger set. You must call either " +
-                    $"{nameof(this.SetContext)} or " +
-                    $"{nameof(this.SetInternalRequestId)} prior to calling " +
-                    $"any logging methods.");
+                    $"Either no {nameof(ISpiExecutionContextManager)} " +
+                    $"instance was injected, or no " +
+                    $"{nameof(ISpiExecutionContextManager)}.{nameof(this.spiExecutionContextManager.SpiExecutionContext)} " +
+                    $"has been set. The " +
+                    $"{nameof(this.spiExecutionContextManager.SpiExecutionContext)} " +
+                    $"must be set prior to calling this method.");
             }
         }
     }
