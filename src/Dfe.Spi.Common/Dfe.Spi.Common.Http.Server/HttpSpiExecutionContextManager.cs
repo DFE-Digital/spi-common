@@ -15,8 +15,6 @@
         : SpiExecutionContextManager, IHttpSpiExecutionContextManager
     {
         private const string BearerAuthorizationPrefix = "Bearer ";
-        private const string InternalRequestIdHeaderName = "X-Internal-Request-Id";
-        private const string ExternalRequestIdHeaderName = "X-External-Request-Id";
 
         private SpiExecutionContext spiExecutionContext;
 
@@ -38,19 +36,19 @@
             }
 
             Guid? internalRequestId = null;
-            if (headerDictionary.ContainsKey(InternalRequestIdHeaderName))
+            if (headerDictionary.ContainsKey(SpiHeaderNames.InternalRequestIdHeaderName))
             {
                 string internalRequestIdStr =
-                    headerDictionary[InternalRequestIdHeaderName].First();
+                    headerDictionary[SpiHeaderNames.InternalRequestIdHeaderName].First();
 
                 internalRequestId = Guid.Parse(internalRequestIdStr);
             }
 
             string externalRequestId = null;
-            if (headerDictionary.ContainsKey(ExternalRequestIdHeaderName))
+            if (headerDictionary.ContainsKey(SpiHeaderNames.ExternalRequestIdHeaderName))
             {
                 externalRequestId =
-                    headerDictionary[ExternalRequestIdHeaderName].First();
+                    headerDictionary[SpiHeaderNames.ExternalRequestIdHeaderName].First();
             }
 
             string identityToken = null;
