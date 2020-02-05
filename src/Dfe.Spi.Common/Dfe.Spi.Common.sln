@@ -14,6 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A7329C41
 		..\..\pipelines\Dfe.Spi.Common.Extensions.yml = ..\..\pipelines\Dfe.Spi.Common.Extensions.yml
 		..\..\pipelines\Dfe.Spi.Common.Http.Client.yml = ..\..\pipelines\Dfe.Spi.Common.Http.Client.yml
 		..\..\pipelines\Dfe.Spi.Common.Http.Server.yml = ..\..\pipelines\Dfe.Spi.Common.Http.Server.yml
+		..\..\pipelines\Dfe.Spi.Common.Http.yml = ..\..\pipelines\Dfe.Spi.Common.Http.yml
 		..\..\pipelines\Dfe.Spi.Common.Logging.yml = ..\..\pipelines\Dfe.Spi.Common.Logging.yml
 		..\..\pipelines\Dfe.Spi.Common.Models.yml = ..\..\pipelines\Dfe.Spi.Common.Models.yml
 		..\..\pipelines\Dfe.Spi.Common.SharedAzure.yml = ..\..\pipelines\Dfe.Spi.Common.SharedAzure.yml
@@ -39,7 +40,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.Caching", "D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.WellKnownIdentifiers", "Dfe.Spi.Common.WellKnownIdentifiers\Dfe.Spi.Common.WellKnownIdentifiers.csproj", "{F1DDA9F0-F43D-4BE8-B6D2-99DCC563ACF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.Spi.Common.Context", "Dfe.Spi.Common.Context\Dfe.Spi.Common.Context.csproj", "{54CBD994-D072-4767-BBA5-2EBCBEBC436C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.Context", "Dfe.Spi.Common.Context\Dfe.Spi.Common.Context.csproj", "{54CBD994-D072-4767-BBA5-2EBCBEBC436C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.Spi.Common.Http", "Dfe.Spi.Common.Http\Dfe.Spi.Common.Http.csproj", "{E50E0E3D-1EA5-4AF8-B9B3-6F1318B67EDF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +90,10 @@ Global
 		{54CBD994-D072-4767-BBA5-2EBCBEBC436C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54CBD994-D072-4767-BBA5-2EBCBEBC436C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54CBD994-D072-4767-BBA5-2EBCBEBC436C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E50E0E3D-1EA5-4AF8-B9B3-6F1318B67EDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E50E0E3D-1EA5-4AF8-B9B3-6F1318B67EDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E50E0E3D-1EA5-4AF8-B9B3-6F1318B67EDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E50E0E3D-1EA5-4AF8-B9B3-6F1318B67EDF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

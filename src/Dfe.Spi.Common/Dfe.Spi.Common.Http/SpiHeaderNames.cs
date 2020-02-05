@@ -1,4 +1,4 @@
-﻿namespace Dfe.Spi.Common.Http.Server
+﻿namespace Dfe.Spi.Common.Http
 {
     /// <summary>
     /// Constants class, containing names of custom headers used throughout
