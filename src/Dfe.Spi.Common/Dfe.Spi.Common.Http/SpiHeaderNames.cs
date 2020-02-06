@@ -15,15 +15,5 @@
         /// The external request ID header name.
         /// </summary>
         public const string ExternalRequestIdHeaderName = "X-External-Request-Id";
-
-        /// <summary>
-        /// The EAPIM subscription key header name
-        /// </summary>
-        public const string EapimSubscriptionKeyHeaderName = "Ocp-Apim-Subscription-Key";
-
-        /// <summary>
-        /// The Azure Functions authorization key header name
-        /// </summary>
-        public const string AzureFunctionKeyHeaderName = "X-Functions-Key";
     }
 }
