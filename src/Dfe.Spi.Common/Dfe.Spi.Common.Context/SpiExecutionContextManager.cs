@@ -31,7 +31,7 @@
             "Microsoft.Globalization",
             "CA1303",
             Justification = "Will not be localised.")]
-        public void SetInternalRequestId(Guid internalRequestId)
+        public virtual void SetInternalRequestId(Guid internalRequestId)
         {
             if (this.SpiExecutionContext == null)
             {
