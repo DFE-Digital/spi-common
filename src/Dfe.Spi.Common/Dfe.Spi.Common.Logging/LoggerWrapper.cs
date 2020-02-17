@@ -44,19 +44,19 @@
 
             this.logDebug = LoggerMessage.Define<string, Guid?, string>(
                 LogLevel.Debug,
-                new EventId(1),
+                new EventId(1001),
                 LogMessagePattern);
             this.logInfo = LoggerMessage.Define<string, Guid?, string>(
                 LogLevel.Information,
-                new EventId(2),
+                new EventId(1002),
                 LogMessagePattern);
             this.logWarning = LoggerMessage.Define<string, Guid?, string>(
                 LogLevel.Warning,
-                new EventId(3),
+                new EventId(1003),
                 LogMessagePattern);
             this.logError = LoggerMessage.Define<string, Guid?, string>(
                 LogLevel.Error,
-                new EventId(4),
+                new EventId(1004),
                 LogMessagePattern);
         }
 
