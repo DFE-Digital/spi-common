@@ -6,8 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Microsoft -->
+    <!-- Dfe.Spi.* -->
     <PackageReference Include="Dfe.Spi.Models" Version="1.0.14" />
+
+    <!-- Microsoft -->
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     
     <!-- Other -->
