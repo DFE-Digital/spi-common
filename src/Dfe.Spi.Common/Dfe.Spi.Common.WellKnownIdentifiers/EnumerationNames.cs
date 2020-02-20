@@ -34,5 +34,10 @@
         /// Name of the gender of entry enumeration.
         /// </summary>
         public const string GenderOfEntry = "GenderOfEntry";
+
+        /// <summary>
+        /// Name of the management group type enumeration.
+        /// </summary>
+        public const string ManagementGroupType = "ManagementGroupType";
     }
 }
