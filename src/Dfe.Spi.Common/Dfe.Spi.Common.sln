@@ -20,6 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{A7329C41
 		..\..\pipelines\Dfe.Spi.Common.SharedAzure.yml = ..\..\pipelines\Dfe.Spi.Common.SharedAzure.yml
 		..\..\pipelines\Dfe.Spi.Common.UnitTesting.yml = ..\..\pipelines\Dfe.Spi.Common.UnitTesting.yml
 		..\..\pipelines\Dfe.Spi.Common.WellKnownIdentifiers.yml = ..\..\pipelines\Dfe.Spi.Common.WellKnownIdentifiers.yml
+		..\..\pipelines\Dfe.Spi.Models.Extensions.yml = ..\..\pipelines\Dfe.Spi.Models.Extensions.yml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.Logging", "Dfe.Spi.Common.Logging\Dfe.Spi.Common.Logging.csproj", "{404F1450-E9CF-4537-98B4-72C0C36C656B}"
@@ -45,6 +46,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dfe.Spi.Common.Http", "Dfe.Spi.Common.Http\Dfe.Spi.Common.Http.csproj", "{E50E0E3D-1EA5-4AF8-B9B3-6F1318B67EDF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.Spi.Common.Extensions.UnitTests", "Dfe.Spi.Common.Extensions.UnitTests\Dfe.Spi.Common.Extensions.UnitTests.csproj", "{DA52A4C7-248E-44F5-8272-AE5342D19823}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.Spi.Models.Extensions", "Dfe.Spi.Models.Extensions\Dfe.Spi.Models.Extensions.csproj", "{DC093CF8-3ABE-4401-90DA-CFEB3E9A292B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +103,10 @@ Global
 		{DA52A4C7-248E-44F5-8272-AE5342D19823}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA52A4C7-248E-44F5-8272-AE5342D19823}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA52A4C7-248E-44F5-8272-AE5342D19823}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC093CF8-3ABE-4401-90DA-CFEB3E9A292B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC093CF8-3ABE-4401-90DA-CFEB3E9A292B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC093CF8-3ABE-4401-90DA-CFEB3E9A292B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC093CF8-3ABE-4401-90DA-CFEB3E9A292B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
