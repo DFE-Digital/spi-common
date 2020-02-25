@@ -1,0 +1,48 @@
+trigger:
+  batch: true
+  branches:
+    include:
+      - "*"
+  paths:
+    include:
+      - /pipelines/Dfe.Spi.Models.Extensions.yml
+      - /src/Dfe.Spi.Common/Dfe.Spi.Models.Extensions/*
+
+variables:
+    BuildConfiguration: Release
+
+steps:
+  - task: NuGetToolInstaller@1
+    displayName: 'Use NuGet 4.9.1'
+    inputs:
+      versionSpec: '4.9.1'
+
+  - task: NuGetCommand@2
+    displayName: 'Restore Public & Private NuGet Packages'
+    inputs:
+      command: 'restore'
+      restoreSolution: '**/*.sln'
+      feedsToUse: 'select'
+      vstsFeed: 'c5095ddb-6433-4990-a3a5-1df8a78b1302/$(FeedSecret)'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Build Common Extensions Library'
+    inputs:
+      command: 'build'
+      projects: 'src/Dfe.Spi.Common/Dfe.Spi.Models.Extensions/Dfe.Spi.Models.Extensions.csproj'
+      arguments: '--configuration $(BuildConfiguration) --no-restore'
+      
+  - task: DotNetCoreCLI@2
+    displayName: 'Pack Common Extensions Library'
+    inputs:
+      command: 'pack'
+      packagesToPack: 'src/Dfe.Spi.Common/Dfe.Spi.Models.Extensions/Dfe.Spi.Models.Extensions.csproj'
+      nobuild: true
+      versioningScheme: 'off'
+      
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifacts'
+    inputs:
+      PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+      ArtifactName: 'drop'
+      publishLocation: 'Container'
