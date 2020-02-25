@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.Spi.Common.Extensions.U
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.Spi.Models.Extensions", "Dfe.Spi.Models.Extensions\Dfe.Spi.Models.Extensions.csproj", "{DC093CF8-3ABE-4401-90DA-CFEB3E9A292B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dfe.Spi.Models.Extensions.UnitTests", "Dfe.Spi.Models.Extensions.UnitTests\Dfe.Spi.Models.Extensions.UnitTests.csproj", "{E8A353EF-0759-4A61-8B54-CC448659DFBF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -107,6 +109,10 @@ Global
 		{DC093CF8-3ABE-4401-90DA-CFEB3E9A292B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC093CF8-3ABE-4401-90DA-CFEB3E9A292B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC093CF8-3ABE-4401-90DA-CFEB3E9A292B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8A353EF-0759-4A61-8B54-CC448659DFBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8A353EF-0759-4A61-8B54-CC448659DFBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8A353EF-0759-4A61-8B54-CC448659DFBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8A353EF-0759-4A61-8B54-CC448659DFBF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,6 +121,7 @@ Global
 		{A7329C41-FA69-408C-81AF-71BF990C0357} = {AC3FB157-5E18-4981-A6A0-80C5CEC8DE96}
 		{7A15DC06-2CCF-4CF4-BBD3-56C33B6D3C08} = {C9511493-D969-4AC8-A1B4-304C6388AFF9}
 		{DA52A4C7-248E-44F5-8272-AE5342D19823} = {C9511493-D969-4AC8-A1B4-304C6388AFF9}
+		{E8A353EF-0759-4A61-8B54-CC448659DFBF} = {C9511493-D969-4AC8-A1B4-304C6388AFF9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {10CC36FA-B89F-4CEF-874E-3E16C654B7CA}
