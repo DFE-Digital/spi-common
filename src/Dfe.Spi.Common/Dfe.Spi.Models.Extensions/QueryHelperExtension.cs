@@ -60,7 +60,7 @@ namespace Dfe.Spi.Models.Extensions
                 return PropertyCache[type];
             }
 
-            var properties = type.GetProperties(BindingFlags.Public);
+            var properties = type.GetProperties();
             PropertyCache.Add(type, properties);
             return properties;
         }
