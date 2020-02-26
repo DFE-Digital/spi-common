@@ -10,7 +10,7 @@ namespace Dfe.Spi.Models.Extensions
     public static class QueryHelperExtension
     {
         private static readonly Dictionary<Type, PropertyInfo[]> PropertyCache = new Dictionary<Type, PropertyInfo[]>();
-        
+
         public static T Pick<T>(this T source, string fields) where T : EntityBase
         {
             // Then we need to limit the fields we send back...
@@ -38,11 +38,14 @@ namespace Dfe.Spi.Models.Extensions
         {
             SetLineageForRequestedFields(source, DateTime.UtcNow);
         }
+
         public static void SetLineageForRequestedFields<T>(this T source, DateTime? readDate) where T : EntityBase
         {
             var type = typeof(T);
             var lineage = GetPropertiesOfType(type)
-                .Where(x => !x.Name.StartsWith("_") && (x.GetValue(source) != null))
+                .Where(x => !x.Name.StartsWith("_") && 
+                            x.GetValue(source) != null &&
+                            !IsPropertyTypeInheritedFromEntityBase(x))
                 .ToDictionary(
                     x => x.Name,
                     x => new LineageEntry()
@@ -63,6 +66,11 @@ namespace Dfe.Spi.Models.Extensions
             var properties = type.GetProperties();
             PropertyCache.Add(type, properties);
             return properties;
+        }
+
+        private static bool IsPropertyTypeInheritedFromEntityBase(PropertyInfo propertyInfo)
+        {
+            return typeof(EntityBase).IsAssignableFrom(propertyInfo.PropertyType);
         }
     }
 }
