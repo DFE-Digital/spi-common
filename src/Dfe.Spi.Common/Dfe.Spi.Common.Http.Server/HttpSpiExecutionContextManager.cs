@@ -77,7 +77,11 @@
 
         public override void SetInternalRequestId(Guid internalRequestId)
         {
-            this.spiExecutionContext = new SpiExecutionContext();
+            if (this.spiExecutionContext == null)
+            {
+                this.spiExecutionContext = new SpiExecutionContext();
+            }
+
             base.SetInternalRequestId(internalRequestId);
         }
     }
