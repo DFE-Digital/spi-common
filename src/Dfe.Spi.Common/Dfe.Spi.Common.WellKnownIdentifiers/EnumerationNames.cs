@@ -39,5 +39,10 @@
         /// Name of the management group type enumeration.
         /// </summary>
         public const string ManagementGroupType = "ManagementGroupType";
+
+        /// <summary>
+        /// Name of the census aggregation fields enumeration.
+        /// </summary>
+        public const string CensusAggregationFields = "CensusAggregationFields";
     }
 }

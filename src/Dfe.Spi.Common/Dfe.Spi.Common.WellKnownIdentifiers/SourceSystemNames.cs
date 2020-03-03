@@ -14,5 +14,10 @@ namespace Dfe.Spi.Common.WellKnownIdentifiers
         /// Name of the UK Register of Learning Providers source.
         /// </summary>
         public const string UkRegisterOfLearningProviders = "UKRLP";
+
+        /// <summary>
+        /// Name of the iStore source.
+        /// </summary>
+        public const string IStore = "IStore";
     }
 }
