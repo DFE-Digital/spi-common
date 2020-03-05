@@ -75,6 +75,7 @@
             this.spiExecutionContext = spiExecutionContext;
         }
 
+        /// <inheritdoc />
         public override void SetInternalRequestId(Guid internalRequestId)
         {
             if (this.spiExecutionContext == null)
