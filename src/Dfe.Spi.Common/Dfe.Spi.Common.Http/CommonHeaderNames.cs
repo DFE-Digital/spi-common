@@ -7,12 +7,12 @@ namespace Dfe.Spi.Common.Http
     public static class CommonHeaderNames
     {
         /// <summary>
-        /// The EAPIM subscription key header name
+        /// The EAPIM subscription key header name.
         /// </summary>
         public const string EapimSubscriptionKeyHeaderName = "Ocp-Apim-Subscription-Key";
 
         /// <summary>
-        /// The Azure Functions authorization key header name
+        /// The Azure Functions authorization key header name.
         /// </summary>
         public const string AzureFunctionKeyHeaderName = "X-Functions-Key";
     }
