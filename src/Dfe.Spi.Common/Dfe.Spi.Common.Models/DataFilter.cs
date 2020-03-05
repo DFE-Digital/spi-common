@@ -1,5 +1,8 @@
 ﻿namespace Dfe.Spi.Common.Models
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+
     /// <summary>
     /// Represents a generic filter for data operations.
     /// </summary>
@@ -17,6 +20,7 @@
         /// <summary>
         /// Gets or sets the <see cref="DataOperator" />.
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public DataOperator Operator
         {
             get;
