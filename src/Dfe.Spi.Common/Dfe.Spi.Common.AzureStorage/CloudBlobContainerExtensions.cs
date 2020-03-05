@@ -19,11 +19,15 @@
         /// <param name="cloudBlobContainer">
         /// An instance of <see cref="CloudBlobContainer" />.
         /// </param>
+        /// <param name="prefix">
+        /// A prefix to filter blobs by.
+        /// </param>
         /// <returns>
         /// An instance of <see cref="IEnumerable{IListBlobItem}" />.
         /// </returns>
         public static async Task<IEnumerable<IListBlobItem>> ListBlobsAsync(
-            this CloudBlobContainer cloudBlobContainer)
+            this CloudBlobContainer cloudBlobContainer,
+            string prefix = null)
         {
             IEnumerable<IListBlobItem> toReturn = null;
 
@@ -34,7 +38,7 @@
 
             toReturn =
                 await ListBlobsHelper.ListBlobsAsync(
-                    cloudBlobContainer.ListBlobsSegmentedAsync)
+                    x => cloudBlobContainer.ListBlobsSegmentedAsync(prefix, x))
                     .ConfigureAwait(false);
 
             return toReturn;
