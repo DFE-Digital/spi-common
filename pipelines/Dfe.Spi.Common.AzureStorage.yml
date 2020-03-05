@@ -5,8 +5,8 @@ trigger:
       - "*"
   paths:
     include:
-      - /pipelines/Dfe.Spi.Common.Logging.yml
-      - /src/Dfe.Spi.Common/Dfe.Spi.Common.Logging/*
+      - /pipelines/Dfe.Spi.Common.AzureStorage.yml
+      - /src/Dfe.Spi.Common/Dfe.Spi.Common.AzureStorage/*
 
 variables:
     BuildConfiguration: Release
