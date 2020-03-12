@@ -14,7 +14,7 @@
     public class HttpSpiExecutionContextManager
         : SpiExecutionContextManager, IHttpSpiExecutionContextManager
     {
-        private const string BearerAuthorizationPrefix = "Bearer ";
+        private const string BearerAuthorizationPrefix = "BEARER ";
 
         private SpiExecutionContext spiExecutionContext;
 
@@ -57,11 +57,14 @@
                 string authorizationValue =
                     headerDictionary[HeaderNames.Authorization].First();
 
-                if (authorizationValue.StartsWith(BearerAuthorizationPrefix, StringComparison.InvariantCulture))
+                string authorizationValueUpper =
+                    authorizationValue.ToUpperInvariant();
+
+                if (authorizationValueUpper.StartsWith(BearerAuthorizationPrefix, StringComparison.InvariantCulture))
                 {
-                    identityToken = authorizationValue.Replace(
-                        BearerAuthorizationPrefix,
-                        string.Empty);
+                    identityToken = authorizationValue.Substring(
+                        BearerAuthorizationPrefix.Length,
+                        authorizationValue.Length - BearerAuthorizationPrefix.Length);
                 }
             }
 
