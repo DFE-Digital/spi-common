@@ -22,7 +22,7 @@
         }
 
         [Test]
-        public void UnnamedTest()
+        public void SetContext_HeaderValuesSetInContext_ValuesAsExpected()
         {
             // Arrange
             Guid? expectedInternalRequestId = new Guid("36b3d65b-02af-407d-acd6-d47587f938fe");
