@@ -27,9 +27,8 @@
         /// <param name="tableQuery">
         /// An instance of <see cref="TableQuery{TTableEntity}" />.
         /// </param>
-        /// <param name="onProgress">
-        /// An optional action to execute after each segment is
-        /// executed/processed.
+        /// <param name="entityResolver">
+        /// An instance of <see cref="EntityResolver{TTableEntity}" />.
         /// </param>
         /// <param name="cancellationToken">
         /// An instance of <see cref="CancellationToken" />.
@@ -40,11 +39,16 @@
         public static async Task<IList<TTableEntity>> ExecuteQueryAsync<TTableEntity>(
             this CloudTable cloudTable,
             TableQuery<TTableEntity> tableQuery,
-            Action<IList<TTableEntity>> onProgress = null,
+            EntityResolver<TTableEntity> entityResolver = null,
             CancellationToken cancellationToken = default(CancellationToken))
             where TTableEntity : ITableEntity, new()
         {
             List<TTableEntity> toReturn = new List<TTableEntity>();
+
+            if (cloudTable == null)
+            {
+                throw new ArgumentNullException(nameof(cloudTable));
+            }
 
             if (tableQuery == null)
             {
@@ -63,16 +67,28 @@
             {
                 runningQuery.TakeCount = tableQuery.TakeCount - toReturn.Count;
 
-                TableQuerySegment<TTableEntity> tableQuerySegment =
-                    await cloudTable.ExecuteQuerySegmentedAsync(
-                        runningQuery,
-                        token)
-                        .ConfigureAwait(false);
+                TableQuerySegment<TTableEntity> tableQuerySegment = null;
+
+                if (entityResolver == null)
+                {
+                    tableQuerySegment =
+                        await cloudTable.ExecuteQuerySegmentedAsync(
+                            runningQuery,
+                            token)
+                            .ConfigureAwait(false);
+                }
+                else
+                {
+                    tableQuerySegment =
+                        await cloudTable.ExecuteQuerySegmentedAsync(
+                            runningQuery,
+                            entityResolver,
+                            token)
+                            .ConfigureAwait(false);
+                }
 
                 token = tableQuerySegment.ContinuationToken;
                 toReturn.AddRange(tableQuerySegment);
-
-                onProgress?.Invoke(toReturn);
             }
             while ((token != null) && (!cancellationToken.IsCancellationRequested) && (tableQuery.TakeCount == null || toReturn.Count < tableQuery.TakeCount.Value));
 
