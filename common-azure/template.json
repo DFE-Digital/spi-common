@@ -69,22 +69,22 @@
     "giasWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1",
 
     "ukrlpWebTestName": "[concat(variables('namePrefix'), '-ukradpt-', variables('webTestSuffix'))]",
-    "ukrlpWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1",
+    "ukrlpWebTestId": "ff59616a-606c-417e-943a-cbb68205804b",
 
     "eventBrokerWebTestName": "[concat(variables('namePrefix'), '-evntbrkr-', variables('webTestSuffix'))]",
-    "eventBrokerWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1",
+    "eventBrokerWebTestId": "df1f8b91-2bc2-40d0-b707-a799c327d43e",
 
     "registryWebTestName": "[concat(variables('namePrefix'), '-registry-', variables('webTestSuffix'))]",
-    "registryWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1",
+    "registryWebTestId": "04b1747d-b1ca-492f-9cc0-3c0348f43418",
 
     "squasherWebTestName": "[concat(variables('namePrefix'), '-squasher-', variables('webTestSuffix'))]",
-    "sqausherWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1",
+    "sqausherWebTestId": "4c86f98e-7fe8-4530-94de-4ccda33ab70d",
 
     "translationWebTestName": "[concat(variables('namePrefix'), '-transapi-', variables('webTestSuffix'))]",
-    "translationWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1",
+    "translationWebTestId": "a47e9a4f-e907-476d-9f3c-545578212554",
 
     "graphWebTestName": "[concat(variables('namePrefix'), '-graphql-', variables('webTestSuffix'))]",
-    "graphWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1"
+    "graphWebTestId": "39804912-fbd0-40a6-af0a-38d4fde8af3e"
   },
   "resources": [
     {
