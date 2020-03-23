@@ -78,7 +78,7 @@
     "registryWebTestId": "04b1747d-b1ca-492f-9cc0-3c0348f43418",
 
     "squasherWebTestName": "[concat(variables('namePrefix'), '-squasher-', variables('webTestSuffix'))]",
-    "sqausherWebTestId": "4c86f98e-7fe8-4530-94de-4ccda33ab70d",
+    "squasherWebTestId": "4c86f98e-7fe8-4530-94de-4ccda33ab70d",
 
     "translationWebTestName": "[concat(variables('namePrefix'), '-transapi-', variables('webTestSuffix'))]",
     "translationWebTestId": "a47e9a4f-e907-476d-9f3c-545578212554",
