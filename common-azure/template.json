@@ -10,12 +10,21 @@
     "environment": {
       "type": "string",
       "defaultValue": "d",
-      "allowedValues": [ "d", "t", "p" ]
+      "allowedValues": [
+        "d",
+        "t",
+        "p"
+      ]
     },
     "environmentName": {
       "type": "string",
       "defaultValue": "DEV",
-      "allowedValues": [ "DEV", "TEST", "OAT", "PROD" ]
+      "allowedValues": [
+        "DEV",
+        "TEST",
+        "OAT",
+        "PROD"
+      ]
     },
     "environmentInstance": {
       "type": "string",
@@ -28,11 +37,54 @@
       "minLength": 2,
       "maxLength": 2,
       "defaultValue": "01"
+    },
+    "giasHeartbeatUrl": {
+      "type": "string"
+    },
+    "ukrlpHeartbeatUrl": {
+      "type": "string"
+    },
+    "eventBrokerHeartbeatUrl": {
+      "type": "string"
+    },
+    "registryHeartbeatUrl": {
+      "type": "string"
+    },
+    "squasherHeartbeatUrl": {
+      "type": "string"
+    },
+    "translationHeartbeatUrl": {
+      "type": "string"
+    },
+    "graphHeartbeatUrl": {
+      "type": "string"
     }
   },
   "variables": {
     "namePrefix": "[concat(parameters('serviceIdentifier'), parameters('environment'), parameters('environmentInstance'))]",
-    "appInsightsName": "[concat(variables('namePrefix'), '-ai-', parameters('appInsightsInstance'))]"
+    "appInsightsName": "[concat(variables('namePrefix'), '-ai-', parameters('appInsightsInstance'))]",
+    "appInsightsId": "[concat(resourceGroup().id, '/providers/microsoft.insights/components/', variables('appInsightsName'))]",
+    "webTestSuffix": "wt-01",
+    "giasWebTestName": "[concat(variables('namePrefix'), '-giasadpt-', variables('webTestSuffix'))]",
+    "giasWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1",
+
+    "ukrlpWebTestName": "[concat(variables('namePrefix'), '-ukradpt-', variables('webTestSuffix'))]",
+    "ukrlpWebTestId": "ff59616a-606c-417e-943a-cbb68205804b",
+
+    "eventBrokerWebTestName": "[concat(variables('namePrefix'), '-evntbrkr-', variables('webTestSuffix'))]",
+    "eventBrokerWebTestId": "df1f8b91-2bc2-40d0-b707-a799c327d43e",
+
+    "registryWebTestName": "[concat(variables('namePrefix'), '-registry-', variables('webTestSuffix'))]",
+    "registryWebTestId": "04b1747d-b1ca-492f-9cc0-3c0348f43418",
+
+    "squasherWebTestName": "[concat(variables('namePrefix'), '-squasher-', variables('webTestSuffix'))]",
+    "squasherWebTestId": "4c86f98e-7fe8-4530-94de-4ccda33ab70d",
+
+    "translationWebTestName": "[concat(variables('namePrefix'), '-transapi-', variables('webTestSuffix'))]",
+    "translationWebTestId": "a47e9a4f-e907-476d-9f3c-545578212554",
+
+    "graphWebTestName": "[concat(variables('namePrefix'), '-graphql-', variables('webTestSuffix'))]",
+    "graphWebTestId": "39804912-fbd0-40a6-af0a-38d4fde8af3e"
   },
   "resources": [
     {
@@ -46,6 +98,278 @@
       },
       "properties": {
         "Application_Type": "web"
+      }
+    },
+    {
+      "type": "microsoft.insights/webtests",
+      "apiVersion": "2015-05-01",
+      "name": "[variables('giasWebTestName')]",
+      "location": "westeurope",
+      "tags": {
+        "[concat('hidden-link:', variables('appInsightsId'))]": "Resource"
+      },
+      "dependsOn": [
+        "[variables('appInsightsId')]"
+      ],
+      "properties": {
+        "SyntheticMonitorId": "[variables('giasWebTestName')]",
+        "Name": "[variables('giasWebTestName')]",
+        "Enabled": true,
+        "Frequency": 300,
+        "Timeout": 30,
+        "Kind": "ping",
+        "RetryEnabled": true,
+        "Locations": [
+          {
+            "Id": "emea-nl-ams-azr"
+          },
+          {
+            "Id": "emea-ru-msa-edge"
+          },
+          {
+            "Id": "emea-se-sto-edge"
+          },
+          {
+            "Id": "emea-gb-db3-azr"
+          }
+        ],
+        "Configuration": {
+          "WebTest": "[concat('<WebTest Name=\"', variables('giasWebTestName'), '\" Id=\"', variables('giasWebTestId'), '\" Enabled=\"True\" CssProjectStructure=\"\" CssIteration=\"\" Timeout=\"30\" WorkItemIds=\"\" xmlns=\"http://microsoft.com/schemas/VisualStudio/TeamTest/2010\" Description=\"\" CredentialUserName=\"\" CredentialPassword=\"\" PreAuthenticate=\"True\" Proxy=\"default\" StopOnError=\"False\" RecordedResultFile=\"\" ResultsLocale=\"\"><Items><Request Method=\"GET\" Guid=\"a44ea745-25df-965b-3329-dd3058d8b70e\" Version=\"1.1\" Url=\"', parameters('giasHeartbeatUrl'),'\" ThinkTime=\"0\" Timeout=\"30\" ParseDependentRequests=\"False\" FollowRedirects=\"True\" RecordResult=\"True\" Cache=\"False\" ResponseTimeGoal=\"0\" Encoding=\"utf-8\" ExpectedHttpStatusCode=\"200\" ExpectedResponseUrl=\"\" ReportingName=\"\" IgnoreHttpStatusCode=\"False\" /></Items></WebTest>')]"
+        }
+      }
+    },
+
+    {
+      "type": "microsoft.insights/webtests",
+      "apiVersion": "2015-05-01",
+      "name": "[variables('ukrlpWebTestName')]",
+      "location": "westeurope",
+      "tags": {
+        "[concat('hidden-link:', variables('appInsightsId'))]": "Resource"
+      },
+      "dependsOn": [
+        "[variables('appInsightsId')]"
+      ],
+      "properties": {
+        "SyntheticMonitorId": "[variables('ukrlpWebTestName')]",
+        "Name": "[variables('ukrlpWebTestName')]",
+        "Enabled": true,
+        "Frequency": 300,
+        "Timeout": 30,
+        "Kind": "ping",
+        "RetryEnabled": true,
+        "Locations": [
+          {
+            "Id": "emea-nl-ams-azr"
+          },
+          {
+            "Id": "emea-ru-msa-edge"
+          },
+          {
+            "Id": "emea-se-sto-edge"
+          },
+          {
+            "Id": "emea-gb-db3-azr"
+          }
+        ],
+        "Configuration": {
+          "WebTest": "[concat('<WebTest Name=\"', variables('ukrlpWebTestName'), '\" Id=\"', variables('ukrlpWebTestId'), '\" Enabled=\"True\" CssProjectStructure=\"\" CssIteration=\"\" Timeout=\"30\" WorkItemIds=\"\" xmlns=\"http://microsoft.com/schemas/VisualStudio/TeamTest/2010\" Description=\"\" CredentialUserName=\"\" CredentialPassword=\"\" PreAuthenticate=\"True\" Proxy=\"default\" StopOnError=\"False\" RecordedResultFile=\"\" ResultsLocale=\"\"><Items><Request Method=\"GET\" Guid=\"a44ea745-25df-965b-3329-dd3058d8b70e\" Version=\"1.1\" Url=\"', parameters('ukrlpHeartbeatUrl'),'\" ThinkTime=\"0\" Timeout=\"30\" ParseDependentRequests=\"False\" FollowRedirects=\"True\" RecordResult=\"True\" Cache=\"False\" ResponseTimeGoal=\"0\" Encoding=\"utf-8\" ExpectedHttpStatusCode=\"200\" ExpectedResponseUrl=\"\" ReportingName=\"\" IgnoreHttpStatusCode=\"False\" /></Items></WebTest>')]"
+        }
+      }
+    },
+
+    {
+      "type": "microsoft.insights/webtests",
+      "apiVersion": "2015-05-01",
+      "name": "[variables('eventBrokerWebTestName')]",
+      "location": "westeurope",
+      "tags": {
+        "[concat('hidden-link:', variables('appInsightsId'))]": "Resource"
+      },
+      "dependsOn": [
+        "[variables('appInsightsId')]"
+      ],
+      "properties": {
+        "SyntheticMonitorId": "[variables('eventBrokerWebTestName')]",
+        "Name": "[variables('eventBrokerWebTestName')]",
+        "Enabled": true,
+        "Frequency": 300,
+        "Timeout": 30,
+        "Kind": "ping",
+        "RetryEnabled": true,
+        "Locations": [
+          {
+            "Id": "emea-nl-ams-azr"
+          },
+          {
+            "Id": "emea-ru-msa-edge"
+          },
+          {
+            "Id": "emea-se-sto-edge"
+          },
+          {
+            "Id": "emea-gb-db3-azr"
+          }
+        ],
+        "Configuration": {
+          "WebTest": "[concat('<WebTest Name=\"', variables('eventBrokerWebTestName'), '\" Id=\"', variables('eventBrokerWebTestId'), '\" Enabled=\"True\" CssProjectStructure=\"\" CssIteration=\"\" Timeout=\"30\" WorkItemIds=\"\" xmlns=\"http://microsoft.com/schemas/VisualStudio/TeamTest/2010\" Description=\"\" CredentialUserName=\"\" CredentialPassword=\"\" PreAuthenticate=\"True\" Proxy=\"default\" StopOnError=\"False\" RecordedResultFile=\"\" ResultsLocale=\"\"><Items><Request Method=\"GET\" Guid=\"a44ea745-25df-965b-3329-dd3058d8b70e\" Version=\"1.1\" Url=\"', parameters('eventBrokerHeartbeatUrl'),'\" ThinkTime=\"0\" Timeout=\"30\" ParseDependentRequests=\"False\" FollowRedirects=\"True\" RecordResult=\"True\" Cache=\"False\" ResponseTimeGoal=\"0\" Encoding=\"utf-8\" ExpectedHttpStatusCode=\"200\" ExpectedResponseUrl=\"\" ReportingName=\"\" IgnoreHttpStatusCode=\"False\" /></Items></WebTest>')]"
+        }
+      }
+    },
+
+    {
+      "type": "microsoft.insights/webtests",
+      "apiVersion": "2015-05-01",
+      "name": "[variables('registryWebTestName')]",
+      "location": "westeurope",
+      "tags": {
+        "[concat('hidden-link:', variables('appInsightsId'))]": "Resource"
+      },
+      "dependsOn": [
+        "[variables('appInsightsId')]"
+      ],
+      "properties": {
+        "SyntheticMonitorId": "[variables('registryWebTestName')]",
+        "Name": "[variables('registryWebTestName')]",
+        "Enabled": true,
+        "Frequency": 300,
+        "Timeout": 30,
+        "Kind": "ping",
+        "RetryEnabled": true,
+        "Locations": [
+          {
+            "Id": "emea-nl-ams-azr"
+          },
+          {
+            "Id": "emea-ru-msa-edge"
+          },
+          {
+            "Id": "emea-se-sto-edge"
+          },
+          {
+            "Id": "emea-gb-db3-azr"
+          }
+        ],
+        "Configuration": {
+          "WebTest": "[concat('<WebTest Name=\"', variables('registryWebTestName'), '\" Id=\"', variables('registryWebTestId'), '\" Enabled=\"True\" CssProjectStructure=\"\" CssIteration=\"\" Timeout=\"30\" WorkItemIds=\"\" xmlns=\"http://microsoft.com/schemas/VisualStudio/TeamTest/2010\" Description=\"\" CredentialUserName=\"\" CredentialPassword=\"\" PreAuthenticate=\"True\" Proxy=\"default\" StopOnError=\"False\" RecordedResultFile=\"\" ResultsLocale=\"\"><Items><Request Method=\"GET\" Guid=\"a44ea745-25df-965b-3329-dd3058d8b70e\" Version=\"1.1\" Url=\"', parameters('registryHeartbeatUrl'),'\" ThinkTime=\"0\" Timeout=\"30\" ParseDependentRequests=\"False\" FollowRedirects=\"True\" RecordResult=\"True\" Cache=\"False\" ResponseTimeGoal=\"0\" Encoding=\"utf-8\" ExpectedHttpStatusCode=\"200\" ExpectedResponseUrl=\"\" ReportingName=\"\" IgnoreHttpStatusCode=\"False\" /></Items></WebTest>')]"
+        }
+      }
+    },
+
+    {
+      "type": "microsoft.insights/webtests",
+      "apiVersion": "2015-05-01",
+      "name": "[variables('squasherWebTestName')]",
+      "location": "westeurope",
+      "tags": {
+        "[concat('hidden-link:', variables('appInsightsId'))]": "Resource"
+      },
+      "dependsOn": [
+        "[variables('appInsightsId')]"
+      ],
+      "properties": {
+        "SyntheticMonitorId": "[variables('squasherWebTestName')]",
+        "Name": "[variables('squasherWebTestName')]",
+        "Enabled": true,
+        "Frequency": 300,
+        "Timeout": 30,
+        "Kind": "ping",
+        "RetryEnabled": true,
+        "Locations": [
+          {
+            "Id": "emea-nl-ams-azr"
+          },
+          {
+            "Id": "emea-ru-msa-edge"
+          },
+          {
+            "Id": "emea-se-sto-edge"
+          },
+          {
+            "Id": "emea-gb-db3-azr"
+          }
+        ],
+        "Configuration": {
+          "WebTest": "[concat('<WebTest Name=\"', variables('squasherWebTestName'), '\" Id=\"', variables('squasherWebTestId'), '\" Enabled=\"True\" CssProjectStructure=\"\" CssIteration=\"\" Timeout=\"30\" WorkItemIds=\"\" xmlns=\"http://microsoft.com/schemas/VisualStudio/TeamTest/2010\" Description=\"\" CredentialUserName=\"\" CredentialPassword=\"\" PreAuthenticate=\"True\" Proxy=\"default\" StopOnError=\"False\" RecordedResultFile=\"\" ResultsLocale=\"\"><Items><Request Method=\"GET\" Guid=\"a44ea745-25df-965b-3329-dd3058d8b70e\" Version=\"1.1\" Url=\"', parameters('squasherHeartbeatUrl'),'\" ThinkTime=\"0\" Timeout=\"30\" ParseDependentRequests=\"False\" FollowRedirects=\"True\" RecordResult=\"True\" Cache=\"False\" ResponseTimeGoal=\"0\" Encoding=\"utf-8\" ExpectedHttpStatusCode=\"200\" ExpectedResponseUrl=\"\" ReportingName=\"\" IgnoreHttpStatusCode=\"False\" /></Items></WebTest>')]"
+        }
+      }
+    },
+
+    {
+      "type": "microsoft.insights/webtests",
+      "apiVersion": "2015-05-01",
+      "name": "[variables('translationWebTestName')]",
+      "location": "westeurope",
+      "tags": {
+        "[concat('hidden-link:', variables('appInsightsId'))]": "Resource"
+      },
+      "dependsOn": [
+        "[variables('appInsightsId')]"
+      ],
+      "properties": {
+        "SyntheticMonitorId": "[variables('translationWebTestName')]",
+        "Name": "[variables('translationWebTestName')]",
+        "Enabled": true,
+        "Frequency": 300,
+        "Timeout": 30,
+        "Kind": "ping",
+        "RetryEnabled": true,
+        "Locations": [
+          {
+            "Id": "emea-nl-ams-azr"
+          },
+          {
+            "Id": "emea-ru-msa-edge"
+          },
+          {
+            "Id": "emea-se-sto-edge"
+          },
+          {
+            "Id": "emea-gb-db3-azr"
+          }
+        ],
+        "Configuration": {
+          "WebTest": "[concat('<WebTest Name=\"', variables('translationWebTestName'), '\" Id=\"', variables('translationWebTestId'), '\" Enabled=\"True\" CssProjectStructure=\"\" CssIteration=\"\" Timeout=\"30\" WorkItemIds=\"\" xmlns=\"http://microsoft.com/schemas/VisualStudio/TeamTest/2010\" Description=\"\" CredentialUserName=\"\" CredentialPassword=\"\" PreAuthenticate=\"True\" Proxy=\"default\" StopOnError=\"False\" RecordedResultFile=\"\" ResultsLocale=\"\"><Items><Request Method=\"GET\" Guid=\"a44ea745-25df-965b-3329-dd3058d8b70e\" Version=\"1.1\" Url=\"', parameters('translationHeartbeatUrl'),'\" ThinkTime=\"0\" Timeout=\"30\" ParseDependentRequests=\"False\" FollowRedirects=\"True\" RecordResult=\"True\" Cache=\"False\" ResponseTimeGoal=\"0\" Encoding=\"utf-8\" ExpectedHttpStatusCode=\"200\" ExpectedResponseUrl=\"\" ReportingName=\"\" IgnoreHttpStatusCode=\"False\" /></Items></WebTest>')]"
+        }
+      }
+    },
+
+    {
+      "type": "microsoft.insights/webtests",
+      "apiVersion": "2015-05-01",
+      "name": "[variables('graphWebTestName')]",
+      "location": "westeurope",
+      "tags": {
+        "[concat('hidden-link:', variables('appInsightsId'))]": "Resource"
+      },
+      "dependsOn": [
+        "[variables('appInsightsId')]"
+      ],
+      "properties": {
+        "SyntheticMonitorId": "[variables('graphWebTestName')]",
+        "Name": "[variables('graphWebTestName')]",
+        "Enabled": true,
+        "Frequency": 300,
+        "Timeout": 30,
+        "Kind": "ping",
+        "RetryEnabled": true,
+        "Locations": [
+          {
+            "Id": "emea-nl-ams-azr"
+          },
+          {
+            "Id": "emea-ru-msa-edge"
+          },
+          {
+            "Id": "emea-se-sto-edge"
+          },
+          {
+            "Id": "emea-gb-db3-azr"
+          }
+        ],
+        "Configuration": {
+          "WebTest": "[concat('<WebTest Name=\"', variables('graphWebTestName'), '\" Id=\"', variables('graphWebTestId'), '\" Enabled=\"True\" CssProjectStructure=\"\" CssIteration=\"\" Timeout=\"30\" WorkItemIds=\"\" xmlns=\"http://microsoft.com/schemas/VisualStudio/TeamTest/2010\" Description=\"\" CredentialUserName=\"\" CredentialPassword=\"\" PreAuthenticate=\"True\" Proxy=\"default\" StopOnError=\"False\" RecordedResultFile=\"\" ResultsLocale=\"\"><Items><Request Method=\"GET\" Guid=\"a44ea745-25df-965b-3329-dd3058d8b70e\" Version=\"1.1\" Url=\"', parameters('graphHeartbeatUrl'),'\" ThinkTime=\"0\" Timeout=\"30\" ParseDependentRequests=\"False\" FollowRedirects=\"True\" RecordResult=\"True\" Cache=\"False\" ResponseTimeGoal=\"0\" Encoding=\"utf-8\" ExpectedHttpStatusCode=\"200\" ExpectedResponseUrl=\"\" ReportingName=\"\" IgnoreHttpStatusCode=\"False\" /></Items></WebTest>')]"
+        }
       }
     }
   ]
