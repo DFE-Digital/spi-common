@@ -68,22 +68,22 @@
     "giasWebTestName": "[concat(variables('namePrefix'), '-giasadpt-', variables('webTestSuffix'))]",
     "giasWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1",
 
-    "ukrlpWebTestName": "[concat(variables('namePrefix'), '-giasadpt-', variables('webTestSuffix'))]",
+    "ukrlpWebTestName": "[concat(variables('namePrefix'), '-ukradpt-', variables('webTestSuffix'))]",
     "ukrlpWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1",
 
-    "eventBrokerWebTestName": "[concat(variables('namePrefix'), '-giasadpt-', variables('webTestSuffix'))]",
+    "eventBrokerWebTestName": "[concat(variables('namePrefix'), '-evntbrkr-', variables('webTestSuffix'))]",
     "eventBrokerWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1",
 
-    "registryWebTestName": "[concat(variables('namePrefix'), '-giasadpt-', variables('webTestSuffix'))]",
+    "registryWebTestName": "[concat(variables('namePrefix'), '-registry-', variables('webTestSuffix'))]",
     "registryWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1",
 
-    "squasherWebTestName": "[concat(variables('namePrefix'), '-giasadpt-', variables('webTestSuffix'))]",
+    "squasherWebTestName": "[concat(variables('namePrefix'), '-squasher-', variables('webTestSuffix'))]",
     "sqausherWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1",
 
-    "translationWebTestName": "[concat(variables('namePrefix'), '-giasadpt-', variables('webTestSuffix'))]",
+    "translationWebTestName": "[concat(variables('namePrefix'), '-transapi-', variables('webTestSuffix'))]",
     "translationWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1",
 
-    "graphWebTestName": "[concat(variables('namePrefix'), '-giasadpt-', variables('webTestSuffix'))]",
+    "graphWebTestName": "[concat(variables('namePrefix'), '-graphql-', variables('webTestSuffix'))]",
     "graphWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1"
   },
   "resources": [
@@ -269,7 +269,7 @@
       ],
       "properties": {
         "SyntheticMonitorId": "[variables('squasherWebTestName')]",
-        "Name": "[variables('giasWebTestName')]",
+        "Name": "[variables('squasherWebTestName')]",
         "Enabled": true,
         "Frequency": 300,
         "Timeout": 30,
