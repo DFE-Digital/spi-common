@@ -1,4 +1,6 @@
-﻿namespace Dfe.Spi.Common.Caching
+﻿using System;
+
+namespace Dfe.Spi.Common.Caching
 {
     using System.Collections.Generic;
     using System.Threading;
@@ -11,7 +13,7 @@
     /// </summary>
     public class CacheProvider : ICacheProvider
     {
-        private readonly Dictionary<string, object> cache;
+        private readonly Dictionary<string, CacheItem> cache;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="CacheProvider" />
@@ -19,7 +21,7 @@
         /// </summary>
         public CacheProvider()
         {
-            this.cache = new Dictionary<string, object>();
+            this.cache = new Dictionary<string, CacheItem>();
         }
 
         /// <inheritdoc />
@@ -28,7 +30,18 @@
             object cacheItem,
             CancellationToken cancellationToken)
         {
-            this.AddCacheItem(key, cacheItem);
+            this.AddCacheItem(key, cacheItem, null);
+
+            return Task.CompletedTask;
+        }
+
+        public Task AddCacheItemAsync(
+            string key, 
+            object cacheItem, 
+            TimeSpan timeToLive, 
+            CancellationToken cancellationToken)
+        {
+            this.AddCacheItem(key, cacheItem, timeToLive);
 
             return Task.CompletedTask;
         }
@@ -43,12 +56,20 @@
             return Task.FromResult(toReturn);
         }
 
-        private void AddCacheItem(string key, object cacheItem)
+        private void AddCacheItem(string key, object value, TimeSpan? timeToLive)
         {
-            // We should never need to overwrite what's in the cache.
-            if (!this.cache.ContainsKey(key))
+            var cacheItem = new CacheItem
             {
-                // ... so just check that the key doesn't exist.
+                Value = value,
+                ExpiresAt = timeToLive.HasValue ? DateTime.UtcNow.Add(timeToLive.Value) : DateTime.MaxValue,
+            };
+
+            if (this.cache.ContainsKey(key))
+            {
+                this.cache[key] = cacheItem;
+            }
+            else
+            {
                 this.cache.Add(key, cacheItem);
             }
         }
@@ -59,10 +80,20 @@
 
             if (this.cache.ContainsKey(key))
             {
-                toReturn = this.cache[key];
+                var cacheItem = this.cache[key];
+                if (DateTime.UtcNow < cacheItem.ExpiresAt)
+                {
+                    toReturn = cacheItem.Value;
+                }
             }
 
             return toReturn;
+        }
+        
+        private class CacheItem
+        {
+            public object Value { get; set; }
+            public DateTime ExpiresAt { get; set; }
         }
     }
 }
