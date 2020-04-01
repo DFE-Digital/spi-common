@@ -19,5 +19,10 @@ namespace Dfe.Spi.Common.WellKnownIdentifiers
         /// Name of the iStore source.
         /// </summary>
         public const string IStore = "IStore";
+
+        /// <summary>
+        /// Name of the Rates source.
+        /// </summary>
+        public const string Rates = "Rates";
     }
 }
