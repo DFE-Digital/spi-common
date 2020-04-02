@@ -19,7 +19,8 @@ namespace Dfe.Spi.Common.Extensions.UnitTests
         [TestCase("11.03.2020 10:23:38", 2020, 3, 11, 10, 23, 38)]
         [TestCase("2020-03-11T10:23:38Z", 2020, 3, 11, 10, 23, 38)]
         [TestCase("2020-03-11T10:23:38+00:00", 2020, 3, 11, 10, 23, 38)]
-        [TestCase("2020-03-11T11:23:38+01:00", 2020, 3, 11, 10, 23, 38)]
+        [TestCase("2020-03-11T11:23:38+01:00", 2020, 3, 11, 11, 23, 38)]
+        [TestCase("1985-10-02", 1985, 10, 2, 0, 0, 0)]
         public void ValidFormatStringsShouldBeConvertedToDates(string value, int year, int month, int day, int hour, int minute, int second)
         {
             var actual = value.ToDateTime();

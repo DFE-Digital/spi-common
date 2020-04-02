@@ -68,7 +68,7 @@ namespace Dfe.Spi.Common.Extensions
                 }
                 
                 var offsetDateTime = new OffsetDateTime(parsedDateTime.Value, parsedOffset.Value);
-                return offsetDateTime.ToDateTimeOffset().UtcDateTime;
+                return offsetDateTime.ToDateTimeOffset().DateTime;
             }
             
 
