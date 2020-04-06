@@ -29,10 +29,23 @@
             HttpStatusCode httpStatusCode,
             string errorIdentifier,
             string message)
-            : base(
-                CreateHttpErrorBody(httpStatusCode, errorIdentifier, message))
+            : this(CreateHttpErrorBody(httpStatusCode, errorIdentifier, message))
         {
-            this.StatusCode = (int)httpStatusCode;
+        }
+        
+        /// <summary>
+        /// Initialises a new instance of the
+        /// <see cref="HttpErrorBodyResult" /> class.
+        /// </summary>
+        /// <param name="errorBody">
+        /// Error details
+        /// model.
+        /// </param>
+        public HttpErrorBodyResult(
+            HttpErrorBody errorBody)
+            : base(errorBody)
+        {
+            this.StatusCode = (int)errorBody.StatusCode;
         }
 
         private static HttpErrorBody CreateHttpErrorBody(
