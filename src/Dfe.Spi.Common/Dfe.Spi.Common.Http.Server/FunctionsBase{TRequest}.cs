@@ -56,6 +56,9 @@
         /// <param name="httpRequest">
         /// An instance of <see cref="HttpRequest" />.
         /// </param>
+        /// <param name="runContext">
+        /// An instance of <see cref="FunctionRunContext" />.
+        /// </param>
         /// <param name="cancellationToken">
         /// An instance of <see cref="CancellationToken" />.
         /// </param>
@@ -64,6 +67,7 @@
         /// </returns>
         public async Task<IActionResult> ValidateAndRunAsync(
             HttpRequest httpRequest,
+            FunctionRunContext runContext,
             CancellationToken cancellationToken)
         {
             IActionResult toReturn = null;
@@ -91,7 +95,7 @@
                     $"parsing of the body of the request.",
                     jsonReaderException);
 
-                toReturn = this.GetMalformedErrorResponse();
+                toReturn = this.GetMalformedErrorResponse(runContext);
             }
             catch (JsonSchemaValidationException jsonSchemaValidationException)
             {
@@ -102,7 +106,7 @@
 
                 string message = jsonSchemaValidationException.Message;
 
-                toReturn = this.GetSchemaValidationResponse(message);
+                toReturn = this.GetSchemaValidationResponse(message, runContext);
             }
 
             if (request != null)
@@ -111,6 +115,7 @@
                 // unknown if its valid according to the *schema*.
                 toReturn = await this.ProcessWellFormedRequestAsync(
                     request,
+                    runContext,
                     cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -133,10 +138,13 @@
         /// Gets an instance of <see cref="HttpErrorBodyResult" /> to return
         /// when the user provides either an empty or malformed request.
         /// </summary>
+        /// <param name="runContext">
+        /// An instance of <see cref="FunctionRunContext" />.
+        /// </param>
         /// <returns>
         /// An instance of <see cref="HttpErrorBodyResult" />.
         /// </returns>
-        protected abstract HttpErrorBodyResult GetMalformedErrorResponse();
+        protected abstract HttpErrorBodyResult GetMalformedErrorResponse(FunctionRunContext runContext);
 
         /// <summary>
         /// Gets an instance of <see cref="HttpErrorBodyResult" /> to return
@@ -146,11 +154,15 @@
         /// <param name="message">
         /// Details on why the schema validation failed.
         /// </param>
+        /// <param name="runContext">
+        /// An instance of <see cref="FunctionRunContext" />.
+        /// </param>
         /// <returns>
         /// An instance of <see cref="HttpErrorBodyResult" />.
         /// </returns>
         protected abstract HttpErrorBodyResult GetSchemaValidationResponse(
-            string message);
+            string message,
+            FunctionRunContext runContext);
 
         /// <summary>
         /// Executes the function's processor and handles the output, specific
@@ -160,6 +172,9 @@
         /// An instance of type <typeparamref name="TRequest" />, well-formed
         /// and validated.
         /// </param>
+        /// <param name="runContext">
+        /// An instance of <see cref="FunctionRunContext" />.
+        /// </param>
         /// <param name="cancellationToken">
         /// An instance of <see cref="CancellationToken" />.
         /// </param>
@@ -168,6 +183,7 @@
         /// </returns>
         protected abstract Task<IActionResult> ProcessWellFormedRequestAsync(
             TRequest request,
+            FunctionRunContext runContext,
             CancellationToken cancellationToken);
 
         private async Task<TRequest> ParseAndValidateRequestAsync(
