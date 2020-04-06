@@ -104,9 +104,7 @@
                     $"during the parsing of the body of the request.",
                     jsonSchemaValidationException);
 
-                string message = jsonSchemaValidationException.Message;
-
-                toReturn = this.GetSchemaValidationResponse(message, runContext);
+                toReturn = this.GetSchemaValidationResponse(jsonSchemaValidationException, runContext);
             }
 
             if (request != null)
@@ -151,7 +149,7 @@
         /// when the user provides a well-formed request, but it does not pass
         /// the schema validation.
         /// </summary>
-        /// <param name="message">
+        /// <param name="validationException">
         /// Details on why the schema validation failed.
         /// </param>
         /// <param name="runContext">
@@ -161,7 +159,7 @@
         /// An instance of <see cref="HttpErrorBodyResult" />.
         /// </returns>
         protected abstract HttpErrorBodyResult GetSchemaValidationResponse(
-            string message,
+            JsonSchemaValidationException validationException,
             FunctionRunContext runContext);
 
         /// <summary>
