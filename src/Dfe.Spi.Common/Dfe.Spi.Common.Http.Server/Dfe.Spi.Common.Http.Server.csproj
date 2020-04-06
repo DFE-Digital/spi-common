@@ -11,7 +11,7 @@
     <PackageReference Include="Dfe.Spi.Common.Extensions" Version="1.0.0" />
     <PackageReference Include="Dfe.Spi.Common.Http" Version="1.0.0" />
     <PackageReference Include="Dfe.Spi.Common.Logging" Version="1.1.0" />
-    <PackageReference Include="Dfe.Spi.Common.Models" Version="1.1.0" />
+    <PackageReference Include="Dfe.Spi.Common.Models" Version="1.1.0-alpha1" />
 
     <!-- Microsoft -->
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Json" Version="2.1.0" />
