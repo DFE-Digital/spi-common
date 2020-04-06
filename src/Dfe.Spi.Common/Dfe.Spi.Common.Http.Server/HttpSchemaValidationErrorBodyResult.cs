@@ -1,10 +1,10 @@
-using System.Linq;
-using System.Net;
-using Dfe.Spi.Common.Models;
-using NJsonSchema.Validation;
-
 namespace Dfe.Spi.Common.Http.Server
 {
+    using System.Linq;
+    using System.Net;
+    using Dfe.Spi.Common.Models;
+    using NJsonSchema.Validation;
+    
     /// <summary>
     /// Error result when json schema validation fails
     /// </summary>
@@ -54,22 +54,27 @@ namespace Dfe.Spi.Common.Http.Server
             {
                 StatusCode = httpStatusCode,
                 ErrorIdentifier = errorIdentifier,
-                Message = validationException.Message,
+                Message = "The supplied body was well-formed JSON but it failed validation",
                 Details = validationException.ValidationErrors.Select(GetValidationErrorDetailsString).ToArray(),
             };
         }
 
         private static string GetValidationErrorDetailsString(ValidationError error)
         {
-            if (error.Kind == ValidationErrorKind.NotInEnumeration)
+            switch (error.Kind)
             {
-                var validEnumValues = error.Schema.Enumeration
-                    .Select(x => x.ToString())
-                    .Aggregate((x, y) => $"{x}, {y}");
-                return $"{error.Path}: {error.Kind}. Valid values are {validEnumValues}";
+                case ValidationErrorKind.NotInEnumeration:
+                    var validEnumValues = error.Schema.Enumeration
+                        .Select(x => x.ToString())
+                        .Aggregate((x, y) => $"{x}, {y}");
+                    return $"{error.Path}: Invalid value. Valid values are {validEnumValues}";
+                
+                case ValidationErrorKind.PropertyRequired:
+                    return $"{error.Path}: Property is required";
+                
+                default:
+                    return $"{error.Path}: {error.Kind}";
             }
-            
-            return $"{error.Path}: {error.Kind}";
         }
     }
 }
