@@ -29,10 +29,7 @@
             HttpStatusCode httpStatusCode,
             string errorIdentifier,
             string message)
-            : this(
-                httpStatusCode,
-                errorIdentifier,
-                CreateHttpErrorBody(httpStatusCode, errorIdentifier, message))
+            : this(CreateHttpErrorBody(httpStatusCode, errorIdentifier, message))
         {
         }
         
@@ -40,25 +37,15 @@
         /// Initialises a new instance of the
         /// <see cref="HttpErrorBodyResult" /> class.
         /// </summary>
-        /// <param name="httpStatusCode">
-        /// The status code. Inherited from the Azure API management error
-        /// model.
-        /// </param>
-        /// <param name="errorIdentifier">
-        /// An error identifier. The format of this identifier is dependent on
-        /// the local system.
-        /// </param>
         /// <param name="errorBody">
         /// Error details
         /// model.
         /// </param>
         public HttpErrorBodyResult(
-            HttpStatusCode httpStatusCode,
-            string errorIdentifier,
             HttpErrorBody errorBody)
             : base(errorBody)
         {
-            this.StatusCode = (int)httpStatusCode;
+            this.StatusCode = (int)errorBody.StatusCode;
         }
 
         private static HttpErrorBody CreateHttpErrorBody(
