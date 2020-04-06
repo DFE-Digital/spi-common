@@ -1,10 +1,12 @@
+using System.Collections.Generic;
+
 namespace Dfe.Spi.Common.Http.Server
 {
     using System.Linq;
     using System.Net;
     using Dfe.Spi.Common.Models;
     using NJsonSchema.Validation;
-    
+
     /// <summary>
     /// Error result when json schema validation fails
     /// </summary>
@@ -29,7 +31,7 @@ namespace Dfe.Spi.Common.Http.Server
             : base(BuildErrorBody(httpStatusCode, errorIdentifier, validationException))
         {
         }
-        
+
         /// <summary>
         /// Initialises a new instance of the <see cref="HttpSchemaValidationErrorBodyResult" /> class.
         /// </summary>
@@ -55,25 +57,36 @@ namespace Dfe.Spi.Common.Http.Server
                 StatusCode = httpStatusCode,
                 ErrorIdentifier = errorIdentifier,
                 Message = "The supplied body was well-formed JSON but it failed validation",
-                Details = validationException.ValidationErrors.Select(GetValidationErrorDetailsString).ToArray(),
+                Details = validationException.ValidationErrors.SelectMany(GetValidationErrorDetailsString).ToArray(),
             };
         }
 
-        private static string GetValidationErrorDetailsString(ValidationError error)
+        private static string[] GetValidationErrorDetailsString(ValidationError error)
         {
             switch (error.Kind)
             {
+                case ValidationErrorKind.ArrayItemNotValid:
+                    var childSchemaValidationError = (ChildSchemaValidationError) error;
+                    var details = new List<string>();
+
+                    foreach (var childError in childSchemaValidationError.Errors)
+                    {
+                        details.AddRange(childError.Value.SelectMany(GetValidationErrorDetailsString));
+                    }
+
+                    return details.ToArray();
+                
                 case ValidationErrorKind.NotInEnumeration:
                     var validEnumValues = error.Schema.Enumeration
                         .Select(x => x.ToString())
                         .Aggregate((x, y) => $"{x}, {y}");
-                    return $"{error.Path}: Invalid value. Valid values are {validEnumValues}";
-                
+                    return new[] {$"{error.Path}: Invalid value. Valid values are {validEnumValues}"};
+
                 case ValidationErrorKind.PropertyRequired:
-                    return $"{error.Path}: Property is required";
-                
+                    return new[] {$"{error.Path}: Property is required"};
+
                 default:
-                    return $"{error.Path}: {error.Kind}";
+                    return new[] {$"{error.Path}: {error.Kind}"};
             }
         }
     }
