@@ -68,7 +68,7 @@
   },
   "variables": {
     "namePrefix": "[concat(parameters('serviceIdentifier'), parameters('environment'), parameters('environmentInstance'))]",
-    "appPrefix": "[concat(concat(variables('namePrefix'), '-shared')]",
+    "appPrefix": "[concat(variables('namePrefix'), '-shared')]",
     "appInsightsName": "[concat(variables('namePrefix'), '-ai-', parameters('appInsightsInstance'))]",
     "appInsightsId": "[concat(resourceGroup().id, '/providers/microsoft.insights/components/', variables('appInsightsName'))]",
 
