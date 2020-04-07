@@ -94,7 +94,7 @@
 
     "servicePlanName01": "[concat(variables('appPrefix'), '-asp-01')]",
     "servicePlanName02": "[concat(variables('appPrefix'), '-asp-02')]",
-    "servicePlanName03": "[concat(variables('appPrefix'), '-asp-03')]",
+    "servicePlanName03": "[concat(variables('appPrefix'), '-asp-03')]"
   },
   "resources": [
     {
