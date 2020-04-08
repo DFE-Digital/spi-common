@@ -44,5 +44,10 @@
         /// Name of the census aggregation fields enumeration.
         /// </summary>
         public const string CensusAggregationFields = "CensusAggregationFields";
+
+        /// <summary>
+        /// Name of the admissions policy enumeration.
+        /// </summary>
+        public const string AdmissionsPolicy = "AdmissionsPolicy";
     }
 }
