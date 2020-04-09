@@ -92,7 +92,7 @@
     "graphWebTestId": "39804912-fbd0-40a6-af0a-38d4fde8af3e",
     "servicePlanName01": "[concat(variables('appPrefix'), '-asp-01')]",
     "servicePlanName02": "[concat(variables('appPrefix'), '-asp-02')]",
-    "servicePlanName02ResourceId": "[resourceId(concat('/Microsoft.Web/serverFarms/', variables('servicePlanName02'))]",
+    "servicePlanName02ResourceId": "[resourceId('/Microsoft.Web/serverFarms/', variables('servicePlanName02'))]",
     "servicePlanName03": "[concat(variables('appPrefix'), '-asp-03')]"
   },
   "resources": [
