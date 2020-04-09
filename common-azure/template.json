@@ -478,7 +478,8 @@
       "location": "[resourceGroup().location]",
       "sku": {
         "name": "P1V2",
-        "tier": "PremiumV2"
+        "tier": "PremiumV2",
+        "capacity": 2
       },
       "kind": "functionapp",
       "properties": {
