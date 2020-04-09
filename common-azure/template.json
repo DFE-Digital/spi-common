@@ -71,7 +71,6 @@
     "appPrefix": "[concat(variables('namePrefix'), '-shared')]",
     "appInsightsName": "[concat(variables('namePrefix'), '-ai-', parameters('appInsightsInstance'))]",
     "appInsightsId": "[concat(resourceGroup().id, '/providers/microsoft.insights/components/', variables('appInsightsName'))]",
-
     "webTestSuffix": "wt-01",
     "giasWebTestName": "[concat(variables('appPrefix'), '-giasadpt-', variables('webTestSuffix'))]",
     "giasWebTestId": "283902b6-3551-43c0-85fb-417cc4dafbf1",
@@ -91,9 +90,9 @@
     "translationWebTestId": "a47e9a4f-e907-476d-9f3c-545578212554",
     "graphWebTestName": "[concat(variables('appPrefix'), '-graphql-', variables('webTestSuffix'))]",
     "graphWebTestId": "39804912-fbd0-40a6-af0a-38d4fde8af3e",
-
     "servicePlanName01": "[concat(variables('appPrefix'), '-asp-01')]",
     "servicePlanName02": "[concat(variables('appPrefix'), '-asp-02')]",
+    "servicePlanName02ResourceId": "[resourceId('Microsoft.Web/serverFarms/', variables('servicePlanName02'))]",
     "servicePlanName03": "[concat(variables('appPrefix'), '-asp-03')]"
   },
   "resources": [
@@ -110,7 +109,6 @@
         "Application_Type": "web"
       }
     },
-
     {
       "type": "microsoft.insights/webtests",
       "apiVersion": "2015-05-01",
@@ -471,6 +469,7 @@
         "environment": "[parameters('environmentName')]"
       }
     },
+
     {
       "type": "Microsoft.Web/serverfarms",
       "apiVersion": "2018-02-01",
@@ -489,6 +488,80 @@
         "environment": "[parameters('environmentName')]"
       }
     },
+    {
+      "type": "Microsoft.Insights/autoscaleSettings",
+      "apiVersion": "2015-04-01",
+      "name": "[concat(variables('servicePlanName02'), '-scale')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[variables('servicePlanName02ResourceId')]"
+      ],
+      "properties": {
+        "name": "[concat(variables('servicePlanName02'), '-scale')]",
+        "enabled": true,
+        "targetResourceUri": "[variables('servicePlanName02ResourceId')]",
+        "profiles": [
+          {
+            "name": "Scale on CPU Usage",
+            "capacity": {
+              "minimum": "1",
+              "maximum": "2",
+              "default": "1"
+            },
+            "rules": [
+              {
+                "scaleAction": {
+                  "direction": "Increase",
+                  "type": "ChangeCount",
+                  "value": "1",
+                  "cooldown": "PT5M"
+                },
+                "metricTrigger": {
+                  "metricName": "CpuPercentage",
+                  "metricNamespace": "microsoft.web/serverfarms",
+                  "metricResourceUri": "[variables('servicePlanName02ResourceId')]",
+                  "operator": "GreaterThan",
+                  "statistic": "Average",
+                  "threshold": 60,
+                  "timeAggregation": "Maximum",
+                  "timeGrain": "PT1M",
+                  "timeWindow": "PT5M",
+                  "Dimensions": [],
+                  "dividePerInstance": false
+                }
+              },
+              {
+                "scaleAction": {
+                  "direction": "Decrease",
+                  "type": "ChangeCount",
+                  "value": "1",
+                  "cooldown": "PT5M"
+                },
+                "metricTrigger": {
+                  "metricName": "CpuPercentage",
+                  "metricNamespace": "microsoft.web/serverfarms",
+                  "metricResourceUri": "[variables('servicePlanName02ResourceId')]",
+                  "operator": "LessThan",
+                  "statistic": "Average",
+                  "threshold": 50,
+                  "timeAggregation": "Average",
+                  "timeGrain": "PT1M",
+                  "timeWindow": "PT10M",
+                  "Dimensions": [],
+                  "dividePerInstance": false
+                }
+              }
+            ]
+          }
+        ],
+        "notifications": [],
+        "targetResourceLocation": "[resourceGroup().location]"
+      },
+      "tags": {
+        "environment": "[parameters('environmentName')]"
+      }
+    },
+
     {
       "type": "Microsoft.Web/serverfarms",
       "apiVersion": "2018-02-01",
