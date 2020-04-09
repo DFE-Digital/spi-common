@@ -490,6 +490,7 @@
     },
     {
       "type": "Microsoft.Insights/autoscaleSettings",
+      "apiVersion": "2018-02-01",
       "name": "[concat(variables('servicePlanName02'), '-scale')]",
       "location": "[resourceGroup().location]",
       "dependsOn": [
