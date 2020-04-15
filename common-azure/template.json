@@ -80,8 +80,7 @@
     "keyVaultAllowedSubnetInstances": {
       "type": "array",
       "defaultValue": [
-        "01",
-        "02"
+        "01"
       ]
     }
   },
