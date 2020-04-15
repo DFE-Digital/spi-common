@@ -70,6 +70,19 @@
     },
     "adminGroupObjectId": {
       "type": "string"
+    },
+    "vNetInstance": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 2,
+      "defaultValue": "01"
+    },
+    "keyVaultAllowedSubnetInstances": {
+      "type": "array",
+      "defaultValue": [
+        "01",
+        "02"
+      ]
     }
   },
   "variables": {
@@ -96,7 +109,10 @@
     "translationWebTestId": "a47e9a4f-e907-476d-9f3c-545578212554",
     "graphWebTestName": "[concat(variables('appPrefix'), '-graphql-', variables('webTestSuffix'))]",
     "graphWebTestId": "39804912-fbd0-40a6-af0a-38d4fde8af3e",
+    "corePrefix": "[concat(variables('namePrefix'), '-core')]",
+    "vNetName": "[concat(concat(variables('corePrefix'), '-vn-'), parameters('vNetInstance'))]",
     "keyVaultName": "[concat(variables('appPrefix'), '-kv-01')]",
+
     "servicePlanName01": "[concat(variables('appPrefix'), '-asp-01')]",
     "servicePlanName02": "[concat(variables('appPrefix'), '-asp-02')]",
     "servicePlanName02ResourceId": "[resourceId('Microsoft.Web/serverFarms/', variables('servicePlanName02'))]",
@@ -589,7 +605,7 @@
 
     {
       "type": "Microsoft.KeyVault/vaults",
-      "apiVersion": "2016-10-01",
+      "apiVersion": "2019-09-01",
       "name": "[variables('keyVaultName')]",
       "location": "[resourceGroup().location]",
       "properties": {
@@ -654,7 +670,19 @@
         ],
         "enabledForDeployment": false,
         "enabledForDiskEncryption": false,
-        "enabledForTemplateDeployment": false
+        "enabledForTemplateDeployment": false,
+        "enablePurgeProtection": false,
+        "enableSoftDelete": false,
+        "networkAcls": {
+          "bypass": "AzureServices",
+          "virtualNetworkRules": {
+            "copy": {
+              "name": "createNetworkRulesLoop",
+              "count": "[length(parameters('keyVaultAllowedSubnetInstances'))]",
+              "id": "[resourceId(variables('corePrefix'), 'Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat(concat(variables('corePrefix'), '-sn-'), parameters('keyVaultAllowedSubnetInstances')[copyIndex()]))]"
+            }
+          }
+        }
       }
     }
   ]
