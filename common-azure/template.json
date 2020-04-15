@@ -64,6 +64,12 @@
     },
     "graphHeartbeatUrl": {
       "type": "string"
+    },
+    "tenantId": {
+      "type": "string"
+    },
+    "adminGroupObjectId": {
+      "type": "string"
     }
   },
   "variables": {
@@ -90,6 +96,7 @@
     "translationWebTestId": "a47e9a4f-e907-476d-9f3c-545578212554",
     "graphWebTestName": "[concat(variables('appPrefix'), '-graphql-', variables('webTestSuffix'))]",
     "graphWebTestId": "39804912-fbd0-40a6-af0a-38d4fde8af3e",
+    "keyVaultName": "[concat(variables('appPrefix'), '-shared-kv-01')]",
     "servicePlanName01": "[concat(variables('appPrefix'), '-asp-01')]",
     "servicePlanName02": "[concat(variables('appPrefix'), '-asp-02')]",
     "servicePlanName02ResourceId": "[resourceId('Microsoft.Web/serverFarms/', variables('servicePlanName02'))]",
@@ -577,6 +584,91 @@
       },
       "tags": {
         "environment": "[parameters('environmentName')]"
+      }
+    },
+
+    {
+      "type": "Microsoft.KeyVault/vaults",
+      "apiVersion": "2016-10-01",
+      "name": "[variables('keyVaultName')]",
+      "location": "westeurope",
+      "properties": {
+        "sku": {
+          "family": "A",
+          "name": "Standard"
+        },
+        "tenantId": "[parameters('tenantId')]",
+        "accessPolicies": [
+          {
+            "tenantId": "[parameters('tenantId')]",
+            "objectId": "[parameters('adminGroupObjectId')]",
+            "permissions": {
+              "keys": [
+                "Get",
+                "List",
+                "Update",
+                "Create",
+                "Import",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore",
+                "Decrypt",
+                "Encrypt",
+                "UnwrapKey",
+                "WrapKey",
+                "Verify",
+                "Sign",
+                "Purge"
+              ],
+              "secrets": [
+                "Get",
+                "List",
+                "Set",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore",
+                "Purge"
+              ],
+              "certificates": [
+                "Get",
+                "List",
+                "Update",
+                "Create",
+                "Import",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore",
+                "ManageContacts",
+                "ManageIssuers",
+                "GetIssuers",
+                "ListIssuers",
+                "SetIssuers",
+                "DeleteIssuers",
+                "Purge"
+              ]
+            }
+          }
+        ],
+        "enabledForDeployment": false,
+        "enabledForDiskEncryption": false,
+        "enabledForTemplateDeployment": false
+      }
+    },
+    {
+      "type": "Microsoft.KeyVault/vaults/secrets",
+      "apiVersion": "2016-10-01",
+      "name": "[concat(variables('keyVaultName'), '/IStoreSqlConnectionString')]",
+      "location": "westeurope",
+      "dependsOn": [
+        "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
+      ],
+      "properties": {
+        "attributes": {
+          "enabled": true
+        }
       }
     }
   ]
