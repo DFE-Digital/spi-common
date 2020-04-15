@@ -96,7 +96,7 @@
     "translationWebTestId": "a47e9a4f-e907-476d-9f3c-545578212554",
     "graphWebTestName": "[concat(variables('appPrefix'), '-graphql-', variables('webTestSuffix'))]",
     "graphWebTestId": "39804912-fbd0-40a6-af0a-38d4fde8af3e",
-    "keyVaultName": "[concat(variables('appPrefix'), '-shared-kv-01')]",
+    "keyVaultName": "[concat(variables('appPrefix'), '-kv-01')]",
     "servicePlanName01": "[concat(variables('appPrefix'), '-asp-01')]",
     "servicePlanName02": "[concat(variables('appPrefix'), '-asp-02')]",
     "servicePlanName02ResourceId": "[resourceId('Microsoft.Web/serverFarms/', variables('servicePlanName02'))]",
@@ -591,7 +591,7 @@
       "type": "Microsoft.KeyVault/vaults",
       "apiVersion": "2016-10-01",
       "name": "[variables('keyVaultName')]",
-      "location": "westeurope",
+      "location": "[resourceGroup().location]",
       "properties": {
         "sku": {
           "family": "A",
