@@ -113,6 +113,14 @@
     "vNetName": "[concat(concat(variables('corePrefix'), '-vn-'), parameters('vNetInstance'))]",
     "keyVaultName": "[concat(variables('appPrefix'), '-kv-01')]",
 
+    "keyVaultAcls": {
+      "copy": {
+        "name": "createNetworkRulesLoop",
+        "count": "[length(parameters('keyVaultAllowedSubnetInstances'))]",
+        "id": "[resourceId(variables('corePrefix'), 'Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat(concat(variables('corePrefix'), '-sn-'), parameters('keyVaultAllowedSubnetInstances')[copyIndex()]))]"
+      }
+    },
+
     "servicePlanName01": "[concat(variables('appPrefix'), '-asp-01')]",
     "servicePlanName02": "[concat(variables('appPrefix'), '-asp-02')]",
     "servicePlanName02ResourceId": "[resourceId('Microsoft.Web/serverFarms/', variables('servicePlanName02'))]",
@@ -675,13 +683,7 @@
         "enableSoftDelete": false,
         "networkAcls": {
           "bypass": "AzureServices",
-          "virtualNetworkRules": {
-            "copy": {
-              "name": "createNetworkRulesLoop",
-              "count": "[length(parameters('keyVaultAllowedSubnetInstances'))]",
-              "id": "[resourceId(variables('corePrefix'), 'Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat(concat(variables('corePrefix'), '-sn-'), parameters('keyVaultAllowedSubnetInstances')[copyIndex()]))]"
-            }
-          }
+          "virtualNetworkRules": "[variables('keyVaultAcls')]"
         }
       }
     }
