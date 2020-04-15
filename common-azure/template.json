@@ -656,21 +656,6 @@
         "enabledForDiskEncryption": false,
         "enabledForTemplateDeployment": false
       }
-    },
-    {
-      "type": "Microsoft.KeyVault/vaults/secrets",
-      "apiVersion": "2016-10-01",
-      "name": "[concat(variables('keyVaultName'), '/IStoreSqlConnectionString')]",
-      "location": "westeurope",
-      "dependsOn": [
-        "[resourceId('Microsoft.KeyVault/vaults', variables('keyVaultName'))]"
-      ],
-      "properties": {
-        "attributes": {
-          "enabled": true
-        },
-        "value": "Please Populate This Setting!"
-      }
     }
   ]
 }
