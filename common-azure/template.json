@@ -113,13 +113,15 @@
     "vNetName": "[concat(concat(variables('corePrefix'), '-vn-'), parameters('vNetInstance'))]",
     "keyVaultName": "[concat(variables('appPrefix'), '-kv-01')]",
 
-    "keyVaultAcls": {
-      "copy": {
-        "name": "createNetworkRulesLoop",
+    "copy": [
+      {
+        "name": "keyVaultAcls",
         "count": "[length(parameters('keyVaultAllowedSubnetInstances'))]",
-        "id": "[resourceId(variables('corePrefix'), 'Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat(concat(variables('corePrefix'), '-sn-'), parameters('keyVaultAllowedSubnetInstances')[copyIndex()]))]"
+        "input": {
+          "id": "[resourceId(variables('corePrefix'), 'Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat(concat(variables('corePrefix'), '-sn-'), parameters('keyVaultAllowedSubnetInstances')[copyIndex()]))]"
+        }
       }
-    },
+    ],
 
     "servicePlanName01": "[concat(variables('appPrefix'), '-asp-01')]",
     "servicePlanName02": "[concat(variables('appPrefix'), '-asp-02')]",
