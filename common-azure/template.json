@@ -118,7 +118,7 @@
         "name": "keyVaultAcls",
         "count": "[length(parameters('keyVaultAllowedSubnetInstances'))]",
         "input": {
-          "id": "[resourceId(variables('corePrefix'), 'Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat(concat(variables('corePrefix'), '-sn-'), parameters('keyVaultAllowedSubnetInstances')[copyIndex()]))]"
+          "id": "[resourceId(variables('corePrefix'), 'Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat(concat(variables('corePrefix'), '-sn-'), parameters('keyVaultAllowedSubnetInstances')[copyIndex('keyVaultAcls')]))]"
         }
       }
     ],
