@@ -4,10 +4,16 @@ param(
 	[string] $ObjectId
 )
 
-# Set the access policy.
-Set-AzKeyVaultAccessPolicy `
-	-VaultName $VaultName `
-	-ResourceGroupName $ResourceGroupName `
-	-ObjectId $objectId `
-	-PermissionsToSecrets get,list `
-	-PassThru;
+try {
+	# Set the access policy.
+	Set-AzKeyVaultAccessPolicy `
+		-VaultName $VaultName `
+		-ResourceGroupName $ResourceGroupName `
+		-ObjectId $objectId `
+		-PermissionsToSecrets get,list `
+		-PassThru;
+}
+catch [Exception]
+{
+	echo $_.Exception | Format-List -Force;
+}
