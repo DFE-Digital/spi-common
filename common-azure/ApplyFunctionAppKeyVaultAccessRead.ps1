@@ -4,11 +4,8 @@ param(
 	[string] $ObjectId
 )
 
-Import-Module Azure;
-Import-Module AzureRM.Resources;
-
 # Set the access policy.
-Set-AzureRmKeyVaultAccessPolicy `
+Set-AzKeyVaultAccessPolicy `
 	-VaultName $VaultName `
 	-ResourceGroupName $ResourceGroupName `
 	-ObjectId $objectId `
