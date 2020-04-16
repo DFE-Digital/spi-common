@@ -64,6 +64,24 @@
     },
     "graphHeartbeatUrl": {
       "type": "string"
+    },
+    "tenantId": {
+      "type": "string"
+    },
+    "adminGroupObjectId": {
+      "type": "string"
+    },
+    "vNetInstance": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 2,
+      "defaultValue": "01"
+    },
+    "keyVaultAllowedSubnetInstances": {
+      "type": "array",
+      "defaultValue": [
+        "01"
+      ]
     }
   },
   "variables": {
@@ -90,6 +108,20 @@
     "translationWebTestId": "a47e9a4f-e907-476d-9f3c-545578212554",
     "graphWebTestName": "[concat(variables('appPrefix'), '-graphql-', variables('webTestSuffix'))]",
     "graphWebTestId": "39804912-fbd0-40a6-af0a-38d4fde8af3e",
+    "corePrefix": "[concat(variables('namePrefix'), '-core')]",
+    "vNetName": "[concat(concat(variables('corePrefix'), '-vn-'), parameters('vNetInstance'))]",
+    "keyVaultName": "[concat(variables('appPrefix'), '-kv-01')]",
+
+    "copy": [
+      {
+        "name": "keyVaultAcls",
+        "count": "[length(parameters('keyVaultAllowedSubnetInstances'))]",
+        "input": {
+          "id": "[resourceId(variables('corePrefix'), 'Microsoft.Network/virtualNetworks/subnets', variables('vnetName'), concat(concat(variables('corePrefix'), '-sn-'), parameters('keyVaultAllowedSubnetInstances')[copyIndex('keyVaultAcls')]))]"
+        }
+      }
+    ],
+
     "servicePlanName01": "[concat(variables('appPrefix'), '-asp-01')]",
     "servicePlanName02": "[concat(variables('appPrefix'), '-asp-02')]",
     "servicePlanName02ResourceId": "[resourceId('Microsoft.Web/serverFarms/', variables('servicePlanName02'))]",
@@ -577,6 +609,82 @@
       },
       "tags": {
         "environment": "[parameters('environmentName')]"
+      }
+    },
+
+    {
+      "type": "Microsoft.KeyVault/vaults",
+      "apiVersion": "2019-09-01",
+      "name": "[variables('keyVaultName')]",
+      "location": "[resourceGroup().location]",
+      "properties": {
+        "sku": {
+          "family": "A",
+          "name": "Standard"
+        },
+        "tenantId": "[parameters('tenantId')]",
+        "accessPolicies": [
+          {
+            "tenantId": "[parameters('tenantId')]",
+            "objectId": "[parameters('adminGroupObjectId')]",
+            "permissions": {
+              "keys": [
+                "Get",
+                "List",
+                "Update",
+                "Create",
+                "Import",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore",
+                "Decrypt",
+                "Encrypt",
+                "UnwrapKey",
+                "WrapKey",
+                "Verify",
+                "Sign",
+                "Purge"
+              ],
+              "secrets": [
+                "Get",
+                "List",
+                "Set",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore",
+                "Purge"
+              ],
+              "certificates": [
+                "Get",
+                "List",
+                "Update",
+                "Create",
+                "Import",
+                "Delete",
+                "Recover",
+                "Backup",
+                "Restore",
+                "ManageContacts",
+                "ManageIssuers",
+                "GetIssuers",
+                "ListIssuers",
+                "SetIssuers",
+                "DeleteIssuers",
+                "Purge"
+              ]
+            }
+          }
+        ],
+        "enabledForDeployment": false,
+        "enabledForDiskEncryption": false,
+        "enabledForTemplateDeployment": false,
+        "enableSoftDelete": false,
+        "networkAcls": {
+          "bypass": "AzureServices",
+          "virtualNetworkRules": "[variables('keyVaultAcls')]"
+        }
       }
     }
   ]
