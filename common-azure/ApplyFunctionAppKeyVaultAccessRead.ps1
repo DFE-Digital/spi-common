@@ -9,7 +9,7 @@ try {
 	Set-AzKeyVaultAccessPolicy `
 		-VaultName $VaultName `
 		-ResourceGroupName $ResourceGroupName `
-		-ObjectId $objectId `
+		-ObjectId $ObjectId `
 		-PermissionsToSecrets get,list `
 		-PassThru;
 }
