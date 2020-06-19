@@ -28,52 +28,10 @@
         }
 
         /// <inheritdoc />
-        public void SetContext(IHeaderDictionary headerDictionary)
+        public virtual void SetContext(IHeaderDictionary headerDictionary)
         {
-            if (headerDictionary == null)
-            {
-                throw new ArgumentNullException(nameof(headerDictionary));
-            }
-
-            Guid? internalRequestId = null;
-            if (headerDictionary.ContainsKey(SpiHeaderNames.InternalRequestIdHeaderName))
-            {
-                string internalRequestIdStr =
-                    headerDictionary[SpiHeaderNames.InternalRequestIdHeaderName].First();
-
-                internalRequestId = Guid.Parse(internalRequestIdStr);
-            }
-
-            string externalRequestId = null;
-            if (headerDictionary.ContainsKey(SpiHeaderNames.ExternalRequestIdHeaderName))
-            {
-                externalRequestId =
-                    headerDictionary[SpiHeaderNames.ExternalRequestIdHeaderName].First();
-            }
-
-            string identityToken = null;
-            if (headerDictionary.ContainsKey(HeaderNames.Authorization))
-            {
-                string authorizationValue =
-                    headerDictionary[HeaderNames.Authorization].First();
-
-                string authorizationValueUpper =
-                    authorizationValue.ToUpperInvariant();
-
-                if (authorizationValueUpper.StartsWith(BearerAuthorizationPrefix, StringComparison.InvariantCulture))
-                {
-                    identityToken = authorizationValue.Substring(
-                        BearerAuthorizationPrefix.Length,
-                        authorizationValue.Length - BearerAuthorizationPrefix.Length);
-                }
-            }
-
-            SpiExecutionContext spiExecutionContext = new SpiExecutionContext()
-            {
-                InternalRequestId = internalRequestId,
-                ExternalRequestId = externalRequestId,
-                IdentityToken = identityToken,
-            };
+            var spiExecutionContext = new SpiExecutionContext();
+            ReadHeadersIntoContext(headerDictionary, spiExecutionContext);
 
             this.spiExecutionContext = spiExecutionContext;
         }
@@ -87,6 +45,54 @@
             }
 
             base.SetInternalRequestId(internalRequestId);
+        }
+
+        /// <summary>
+        /// Set properties of context from HTTP headers.
+        /// </summary>
+        /// <param name="headerDictionary">HTTP headers to read from.</param>
+        /// <param name="context">Context to read headers into.</param>
+        /// <exception cref="ArgumentNullException">Thrown if headers or context is null</exception>
+        protected virtual void ReadHeadersIntoContext(IHeaderDictionary headerDictionary, SpiExecutionContext context)
+        {
+            if (headerDictionary == null)
+            {
+                throw new ArgumentNullException(nameof(headerDictionary));
+            }
+            if (context == null)
+            {
+                throw new ArgumentNullException(nameof(context));
+            }
+
+            if (headerDictionary.ContainsKey(SpiHeaderNames.InternalRequestIdHeaderName))
+            {
+                string internalRequestIdStr =
+                    headerDictionary[SpiHeaderNames.InternalRequestIdHeaderName].First();
+
+                context.InternalRequestId = Guid.Parse(internalRequestIdStr);
+            }
+
+            if (headerDictionary.ContainsKey(SpiHeaderNames.ExternalRequestIdHeaderName))
+            {
+                context.ExternalRequestId =
+                    headerDictionary[SpiHeaderNames.ExternalRequestIdHeaderName].First();
+            }
+
+            if (headerDictionary.ContainsKey(HeaderNames.Authorization))
+            {
+                string authorizationValue =
+                    headerDictionary[HeaderNames.Authorization].First();
+
+                string authorizationValueUpper =
+                    authorizationValue.ToUpperInvariant();
+
+                if (authorizationValueUpper.StartsWith(BearerAuthorizationPrefix, StringComparison.InvariantCulture))
+                {
+                    context.IdentityToken = authorizationValue.Substring(
+                        BearerAuthorizationPrefix.Length,
+                        authorizationValue.Length - BearerAuthorizationPrefix.Length);
+                }
+            }
         }
     }
 }
