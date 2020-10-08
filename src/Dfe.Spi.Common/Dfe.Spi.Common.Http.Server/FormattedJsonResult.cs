@@ -6,7 +6,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
 namespace Dfe.Spi.Common.Http.Server
-{// Created this as having issues with .NET 3.1 and customising serialization settings:
+{
+    // Created this as having issues with .NET 3.1 and customising serialization settings:
     //    - OTB you cannot provide JsonSerializerSettings as the default serialization is no longer Newtonsoft
     //    - Adding the Newtonsoft path package fixed when running but caused issues with the use of DefaultHttpRequest in tests
     //    - Adding json formatters in startup
