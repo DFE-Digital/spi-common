@@ -7,7 +7,7 @@
     /// <summary>
     /// An action result which returns error information.
     /// </summary>
-    public class HttpErrorBodyResult : JsonResult
+    public class HttpErrorBodyResult : FormattedJsonResult
     {
         /// <summary>
         /// Initialises a new instance of the
@@ -43,9 +43,8 @@
         /// </param>
         public HttpErrorBodyResult(
             HttpErrorBody errorBody)
-            : base(errorBody)
+            : base(errorBody, errorBody.StatusCode)
         {
-            this.StatusCode = (int)errorBody.StatusCode;
         }
 
         private static HttpErrorBody CreateHttpErrorBody(
