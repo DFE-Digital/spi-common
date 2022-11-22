@@ -7,6 +7,8 @@ trigger:
     include:
       - /pipelines/Dfe.Spi.Common.Extensions.yml
       - /src/Dfe.Spi.Common/Dfe.Spi.Common.Extensions/*
+pool:
+    vmImage: 'ubuntu-latest'
 
 variables:
     BuildConfiguration: Release

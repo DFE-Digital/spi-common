@@ -16,6 +16,7 @@ namespace Dfe.Spi.Common.Http.Client
         private readonly string clientId;
         private readonly string clientSecret;
         private readonly string resource;
+        private readonly bool localAuth;
 
         /// <summary>
         /// Initialises a new instance of the
@@ -33,16 +34,21 @@ namespace Dfe.Spi.Common.Http.Client
         /// <param name="resource">
         /// The resource to authenticate for.
         /// </param>
+        /// <param name="localAuth">
+        /// If true Authorization header is added to the request when running locally
+        /// </param>
         public OAuth2ClientCredentialsAuthenticator(
             string tokenEndpoint,
             string clientId,
             string clientSecret,
-            string resource)
+            string resource,
+            bool localAuth = false)
         {
             this.tokenEndpoint = tokenEndpoint;
             this.clientId = clientId;
             this.clientSecret = clientSecret;
             this.resource = resource;
+            this.localAuth = localAuth;
         }
 
         /// <inheritdoc cref="RestSharp.Authenticators.IAuthenticator"/>
@@ -53,12 +59,15 @@ namespace Dfe.Spi.Common.Http.Client
                 throw new ArgumentNullException(nameof(request));
             }
 
-            var token = this.GetToken();
+            if (!System.Diagnostics.Debugger.IsAttached || this.localAuth)
+            {
+                var token = this.GetToken();
 
-            request.AddParameter(
-                "Authorization",
-                $"Bearer {token}",
-                ParameterType.HttpHeader);
+                request.AddParameter(
+                    "Authorization",
+                    $"Bearer {token}",
+                    ParameterType.HttpHeader);
+            }
         }
 
         private string GetToken()

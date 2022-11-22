@@ -7,6 +7,8 @@ trigger:
     include:
       - /pipelines/Dfe.Spi.Common.Http.Server.yml
       - /src/Dfe.Spi.Common/Dfe.Spi.Common.Http.Server/*
+pool:
+    vmImage: 'ubuntu-latest'
 
 variables:
     BuildConfiguration: Release
