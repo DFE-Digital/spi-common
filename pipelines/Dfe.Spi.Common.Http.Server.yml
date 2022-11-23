@@ -19,13 +19,8 @@ steps:
     inputs:
       versionSpec: '6.4.0'
 
-  - task: UseDotNet@2
-    displayName: 'Use dotnet 6'
-    inputs:
-     version: '6.0.x'
-
   - task: NuGetCommand@2
-    displayName: 'Restore NuGet Packages'
+    displayName: 'Restore Public & Private NuGet Packages'
     inputs:
       command: 'restore'
       restoreSolution: '**/*.sln'
